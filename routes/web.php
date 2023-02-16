@@ -19,5 +19,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::controller(HomeController::class)->group(function () {
+    // Category
     Route::get('/', 'index')->name('home.index');
+    Route::get('/category/{slug}', 'show_category')->name('show.category');
+
+    // Trainings / Pelatihan
 });
