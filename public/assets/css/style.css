@@ -1,0 +1,13 @@
+body {
+    font-family: "Montserrat", sans-serif;
+  }
+
+.navbar-brand {
+    font-weight: 700; 
+    font-size: 34px;
+    color: #2C5F2D;
+}
+
+.navbar-brand:hover {
+    color: #2C5F2D !important;
+}
