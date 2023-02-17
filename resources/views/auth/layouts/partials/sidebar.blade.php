@@ -37,6 +37,11 @@
                         <p>Category</p>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->segment(2) == 'pelatihan' ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.training.index') }}">
+                        <p>Pelatihan</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

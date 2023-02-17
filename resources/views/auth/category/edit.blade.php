@@ -45,8 +45,8 @@
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-outline-success btn-round float-right">
-                                        <i class="fas fa-plus"></i>
-                                        Added
+                                        <i class="fas fa-sync"></i>
+                                        Update
                                     </button>
                                 </div>
                             </form>
