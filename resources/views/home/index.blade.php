@@ -4,6 +4,11 @@
 
 @section('content')
     <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">Certificate</li>
+            </ol>
+        </nav>
         <div class="row d-flex justify-content-center">
             <h3 class="text-center py-4">Pelatihan</h3>
             @foreach ($categories as $category)

@@ -18,10 +18,16 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::get('/sertifikat', function () {
+    return view('sertifikat');
+});
+
 Route::controller(HomeController::class)->group(function () {
     // Category
     Route::get('/', 'index')->name('home.index');
     Route::get('/category/{slug}', 'show_category')->name('show.category');
 
     // Trainings / Pelatihan
+    Route::get('/training/{slug}', 'show_training')->name('show.training');
+    Route::get('/participant/{slug}', 'show_participant')->name('show.participant');
 });
