@@ -135,6 +135,8 @@
 
     <!-- Atlantis JS -->
     <script src="{{ asset('atlantis') }}/js/atlantis.min.js"></script>
+
+    @stack('scripts')
 </body>
 
 </html>

@@ -23,7 +23,7 @@
                     </span>
                     <h4 class="text-section">MENU NAVIGATIONS</h4>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item {{ request()->segment(2) == 'dashboard' ? 'active' : '' }}">
                     <a href="{{ route('dashboard.index') }}">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
@@ -32,8 +32,8 @@
                 <li class="nav-section">
                     <h4 class="text-section">KELOLA SERTIFIKAT</h4>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.index') }}">
+                <li class="nav-item {{ request()->segment(2) == 'category' ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.category.index') }}">
                         <p>Category</p>
                     </a>
                 </li>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +38,12 @@ Route::controller(HomeController::class)->group(function () {
 // Auth
 Route::prefix('auth')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    // Route Kelola Sertifikat
+    Route::get('/category', [CategoryController::class, 'index'])->name('dashboard.category.index');
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('dashboard.category.create');
+    Route::post('/category/store', [CategoryController::class, 'store'])->name('dashboard.category.store');
+    Route::get('/category/{slug}/edit', [CategoryController::class, 'edit'])->name('dashboard.category.edit');
+    Route::patch('/category/{slug}/update', [CategoryController::class, 'update'])->name('dashboard.category.update');
+    Route::delete('/category{slug}/delete', [CategoryController::class, 'destroy'])->name('dashboard.category.delete');
 });
