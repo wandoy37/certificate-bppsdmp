@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +32,9 @@ Route::controller(HomeController::class)->group(function () {
     // Trainings / Pelatihan
     Route::get('/training/{slug}', 'show_training')->name('show.training');
     Route::get('/participant/{slug}', 'show_participant')->name('show.participant');
+});
+
+// Auth
+Route::prefix('auth')->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 });
