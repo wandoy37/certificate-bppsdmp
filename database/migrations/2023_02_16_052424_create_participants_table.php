@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('jabatan');
             $table->string('instansi');
             $table->string('email');
+            $table->string('document')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('training_id');
             $table->timestamps();
