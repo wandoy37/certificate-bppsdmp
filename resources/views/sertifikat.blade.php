@@ -34,7 +34,7 @@
         style="background-image: url('{{ asset('template.png') }}'); background-repeat: no-repeat;">
 
         <!-- Write HTML just like a web page -->
-        <article>This is an A5 document.</article>
+        <span>{{ $url }}</span>
 
     </section>
 

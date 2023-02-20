@@ -34,16 +34,19 @@
                 </li>
                 <li class="nav-item {{ request()->segment(2) == 'category' ? 'active' : '' }}">
                     <a href="{{ route('dashboard.category.index') }}">
+                        <i class="fas fa-box"></i>
                         <p>Category</p>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->segment(2) == 'pelatihan' ? 'active' : '' }}">
                     <a href="{{ route('dashboard.training.index') }}">
+                        <i class="fas fa-book-reader"></i>
                         <p>Pelatihan</p>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->segment(2) == 'peserta' ? 'active' : '' }}">
                     <a href="{{ route('dashboard.participant.index') }}">
+                        <i class="fas fa-users"></i>
                         <p>Peserta</p>
                     </a>
                 </li>

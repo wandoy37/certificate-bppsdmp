@@ -19,7 +19,7 @@ class TrainingController extends Controller
     public function index()
     {
         $trainings = Training::latest()->paginate(10);
-        // return response()->json($training);
+        $url = url();
         return view('auth.training.index', compact('trainings'));
     }
 

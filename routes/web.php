@@ -26,7 +26,9 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 // });
 
 Route::get('/sertifikat', function () {
-    return view('sertifikat');
+    $slug = 'test-slug';
+    $url = url()->route('show.training', $slug);
+    return view('sertifikat', compact('url'));
 });
 
 Route::controller(HomeController::class)->group(function () {

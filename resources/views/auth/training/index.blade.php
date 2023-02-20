@@ -43,39 +43,42 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr class="text-center">
                                         <th scope="col">Nama Pelatihan</th>
                                         <th scope="col">Angkatan</th>
                                         <th scope="col">Tahun</th>
-                                        <th scope="col" width="20%">Actions</th>
+                                        <th scope="col">QR Code</th>
+                                        <th scope="col" width="10%">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($trainings as $training)
-                                        <tr>
+                                        <tr style="height: 150px; vertical-align: center;">
                                             <td>{{ $training->title }}</td>
                                             <td class="text-center">{{ $training->batch }}</td>
                                             <td class="text-center">{{ $training->year }}</td>
-                                            <td class="text-center d-flex justify-content-center">
+                                            <td class="text-center">
+                                                {!! QrCode::size(100)->generate(route('show.training', $training->slug)) !!}
+                                                {{-- {{ route('show.training', $training->slug) }} --}}
+                                            </td>
+                                            <td class="text-center">
                                                 <div class="form-inline">
                                                     <a href="{{ route('dashboard.training.edit', $training->slug) }}"
-                                                        class="btn btn-outline-warning btn-round">
+                                                        class="text-warning">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
-                                                    <div class="ml-2">
-                                                        <form id="form-delete-{{ $training->id }}"
-                                                            action="{{ route('dashboard.training.delete', $training->slug) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                        </form>
-                                                        <button type="button" class="btn btn-danger btn-round"
-                                                            onclick="btnDelete( {{ $training->id }} )">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </div>
+                                                    <form id="form-delete-{{ $training->id }}"
+                                                        action="{{ route('dashboard.training.delete', $training->slug) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                    <button type="button" class="btn btn-link text-danger"
+                                                        onclick="btnDelete( {{ $training->id }} )">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
