@@ -42,6 +42,11 @@
                         <p>Pelatihan</p>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->segment(2) == 'peserta' ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.participant.index') }}">
+                        <p>Peserta</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

@@ -3,7 +3,9 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\TrainingController;
+use App\Models\Participant;
 use App\Models\Training;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -58,4 +60,12 @@ Route::prefix('auth')->middleware(['auth'])->group(function () {
     Route::get('/pelatihan/{slug}/edit', [TrainingController::class, 'edit'])->name('dashboard.training.edit');
     Route::patch('/pelatihan/{slug}/update', [TrainingController::class, 'update'])->name('dashboard.training.update');
     Route::delete('/pelatihan/{slug}/delete', [TrainingController::class, 'destroy'])->name('dashboard.training.delete');
+
+    // Participants / Peserta
+    Route::get('/peserta', [ParticipantController::class, 'index'])->name('dashboard.participant.index');
+    Route::get('/peserta/create', [ParticipantController::class, 'create'])->name('dashboard.participant.create');
+    Route::post('/peserta/store', [ParticipantController::class, 'store'])->name('dashboard.participant.store');
+    Route::get('/peserta/{slug}/edit', [ParticipantController::class, 'edit'])->name('dashboard.participant.edit');
+    Route::patch('/peserta/{slug}/update', [ParticipantController::class, 'update'])->name('dashboard.participant.update');
+    Route::delete('/peserta/{slug}/delete', [ParticipantController::class, 'destroy'])->name('dashboard.participant.delete');
 });
