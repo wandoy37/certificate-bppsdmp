@@ -39,7 +39,7 @@
                     </thead>
                     <tbody>
                         <?php $no = 0; ?>
-                        @foreach ($training->participants as $participant)
+                        @foreach ($participants as $participant)
                             <?php $no++; ?>
                             <tr>
                                 <th scope="row" class="text-center">{{ $no }}</th>
@@ -55,6 +55,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="my-4 d-flex justify-content-center">
+                    {{ $participants->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </div>
     </div>

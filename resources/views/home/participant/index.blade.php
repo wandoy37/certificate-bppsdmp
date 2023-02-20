@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-striped table-hover">
@@ -38,6 +38,20 @@
                                 <tr>
                                     <th scope="row">Nama</th>
                                     <td>{{ $participant->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">NIK</th>
+                                    <td>{{ $participant->nik }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">NIP</th>
+                                    <td>
+                                        @if ($participant->nip == 0)
+                                            -
+                                        @else
+                                            {{ $participant->nip }}
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Pelatihan</th>
@@ -53,7 +67,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Status</th>
-                                    <td class="text-danger">unknown</td>
+                                    <td class="text-success fw-bold">LULUS</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -61,11 +75,10 @@
                 </div>
             </div>
             <div class="col-lg-12 py-4">
-                {{-- <embed src="{{ asset('documents/certificate.pdf') }}" width="1000px" height="700px" /> --}}
                 <div class="card">
                     <div class="card-body">
-                        <iframe src="{{ asset('documents/certificate.pdf') }}" frameBorder="0" scrolling="auto"
-                            height="900px" width="100%"></iframe>
+                        <iframe src="{{ asset('certificates/' . $participant->document) }}" frameBorder="0"
+                            scrolling="auto" height="900px" width="100%"></iframe>
                     </div>
                 </div>
             </div>

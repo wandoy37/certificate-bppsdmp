@@ -24,8 +24,8 @@ class HomeController extends Controller
     public function show_training($slug)
     {
         $training = Training::where('slug', $slug)->first();
-        // return response()->json($training);
-        return view('home.training.index', compact('training'));
+        $participants = Participant::where('training_id', $training->id)->orderBy('id', 'DESC')->paginate(10);
+        return view('home.training.index', compact('training', 'participants'));
     }
 
     public function show_participant($slug)
