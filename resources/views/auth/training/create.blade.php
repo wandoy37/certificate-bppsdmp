@@ -46,24 +46,29 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Code</label>
+                                            <input type="text" class="form-control" name="code" placeholder="Code ..."
+                                                required>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Nama Pelatihan</label>
                                             <input type="text" class="form-control" name="title"
                                                 placeholder="Nama Pelatihan ..." required>
                                         </div>
                                         <div class="form-group">
                                             <label>Angkatan</label>
-                                            <input type="number" class="form-control" name="batch"
+                                            <input type="text" class="form-control" name="batch"
                                                 placeholder="Angkatan ..." required>
                                         </div>
                                         <div class="form-group">
                                             <label>Tahun</label>
-                                            <input type="number" class="form-control" name="year"
+                                            <input type="text" class="form-control" name="year"
                                                 placeholder="Tahun ..." required>
                                         </div>
                                         <div class="form-group">
                                             <label>Durasi Pelatihan</label>
                                             <div class="input-group">
-                                                <input type="number" class="form-control" name="hour"
+                                                <input type="text" class="form-control" name="hour"
                                                     placeholder="Durasi Pelatihan ..." required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">Jam</span>

@@ -53,12 +53,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label>NIP</label>
-                                            <input type="number" class="form-control" name="nip" placeholder="NIP ..."
+                                            <input type="text" class="form-control" name="nip" placeholder="NIP ..."
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label>NIK</label>
-                                            <input type="number" class="form-control" name="nik" placeholder="NIK ..."
+                                            <input type="text" class="form-control" name="nik" placeholder="NIK ..."
                                                 required>
                                         </div>
                                         <div class="form-group">
@@ -78,6 +78,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tempat, Tanggal Lahir</label>
+                                            <input type="text" class="form-control" name="birth"
+                                                placeholder="Tempat, tanggal lahir ..." required>
+                                        </div>
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="text" class="form-control" name="email"
@@ -103,10 +108,10 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label>Document Certificate</label>
                                             <input type="file" class="form-control" name="document">
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-outline-success btn-round float-right">
                                                 <i class="fas fa-plus"></i>

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->string('title');
             $table->string('slug');
             $table->string('batch');

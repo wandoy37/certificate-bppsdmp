@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Nette\Utils\Json;
 
 class ParticipantController extends Controller
 {
@@ -51,11 +52,12 @@ class ParticipantController extends Controller
                 'name' => 'required',
                 'nip' => 'required',
                 'nik' => 'required',
+                'birth' => 'required',
                 'pangkat_golongan' => 'required',
                 'jabatan' => 'required',
                 'instansi' => 'required',
                 'email' => 'required',
-                'document' => 'required',
+                // 'document' => 'required',
                 'role' => 'required',
                 'training' => 'required',
             ],
@@ -69,31 +71,32 @@ class ParticipantController extends Controller
 
         DB::beginTransaction();
         try {
-            // Make Dir
-            $file_path = 'certificates';
-            if (!file_exists($file_path)) {
-                File::makeDirectory($file_path, 0775, true, true);
-            }
+            // // Make Dir
+            // $file_path = 'certificates';
+            // if (!file_exists($file_path)) {
+            //     File::makeDirectory($file_path, 0775, true, true);
+            // }
 
-            // Upload and Save File
-            if ($request['document']) {
-                $file = $request['document'];
-                $ext = $file->getClientOriginalExtension();
-                $filename = Str::slug($request->name, '-') . '-' . date('Ymd') . '.' . $ext;
-                $file->move($file_path, $filename);
-                $request['document'] = $filename;
-            }
+            // // Upload and Save File
+            // if ($request['document']) {
+            //     $file = $request['document'];
+            //     $ext = $file->getClientOriginalExtension();
+            //     $filename = Str::slug($request->name, '-') . '-' . date('Ymd') . '.' . $ext;
+            //     $file->move($file_path, $filename);
+            //     $request['document'] = $filename;
+            // }
 
             $data = [
                 'name' => $request->name,
                 'slug' => Str::slug($request->name, '-') . '-' . date('Ymd'),
                 'nip' => $request->nip,
                 'nik' => $request->nik,
+                'birth' => $request->birth,
                 'pangkat_golongan' => $request->pangkat_golongan,
                 'jabatan' => $request->jabatan,
                 'instansi' => $request->instansi,
                 'email' => $request->email,
-                'document' => $filename,
+                'document' => 'doc-unknow',
                 'role_id' => $request->role,
                 'training_id' => $request->training,
             ];
@@ -114,9 +117,12 @@ class ParticipantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $peserta = Participant::where('slug', $slug)->first();
+        // $count = Participant::where('training_id', $peserta->training_id)->count();
+        // return response()->json($count);
+        return view('auth.participant.print', compact('peserta'));
     }
 
     /**
@@ -149,9 +155,11 @@ class ParticipantController extends Controller
                 'name' => 'required',
                 'nip' => 'required',
                 'nik' => 'required',
+                'birth' => 'required',
                 'pangkat_golongan' => 'required',
                 'jabatan' => 'required',
                 'instansi' => 'required',
+                'birth' => 'required',
                 'email' => 'required',
                 'role' => 'required',
                 'training' => 'required',
@@ -169,35 +177,36 @@ class ParticipantController extends Controller
             // Get Participant
             $participant = Participant::where('slug', $slug)->first();
 
-            // Make Dir
-            $file_path = 'certificates';
-            if (!file_exists($file_path)) {
-                File::makeDirectory($file_path, 0775, true, true);
-            }
+            // // Make Dir
+            // $file_path = 'certificates';
+            // if (!file_exists($file_path)) {
+            //     File::makeDirectory($file_path, 0775, true, true);
+            // }
 
-            // Upload and Save File
-            if ($request['document']) {
-                // delete old file
-                $oldFile = $participant->document;
-                File::delete($file_path, $oldFile);
+            // // Upload and Save File
+            // if ($request['document']) {
+            //     // delete old file
+            //     $oldFile = $participant->document;
+            //     File::delete($file_path, $oldFile);
 
-                $file = $request['document'];
-                $ext = $file->getClientOriginalExtension();
-                $filename = Str::slug($request->name, '-') . '-' . date('Ymd') . '.' . $ext;
-                $file->move($file_path, $filename);
-                $request['document'] = $filename;
-            }
+            //     $file = $request['document'];
+            //     $ext = $file->getClientOriginalExtension();
+            //     $filename = Str::slug($request->name, '-') . '-' . date('Ymd') . '.' . $ext;
+            //     $file->move($file_path, $filename);
+            //     $request['document'] = $filename;
+            // }
 
             $participant->update([
                 'name' => $request->name,
                 'slug' => Str::slug($request->name, '-') . '-' . date('Ymd'),
                 'nip' => $request->nip,
                 'nik' => $request->nik,
+                'birth' => $request->birth,
                 'pangkat_golongan' => $request->pangkat_golongan,
                 'jabatan' => $request->jabatan,
                 'instansi' => $request->instansi,
                 'email' => $request->email,
-                'document' => $filename,
+                'document' => 'doc-unknow',
                 'role_id' => $request->role,
                 'training_id' => $request->training,
             ]);
@@ -222,10 +231,10 @@ class ParticipantController extends Controller
         try {
             $participant = Participant::where('slug', $slug)->first();
 
-            // delete old file
-            $oldFile = $participant->document;
-            $file_path = 'certificates';
-            File::delete($file_path . '/' . $oldFile);
+            // // delete old file
+            // $oldFile = $participant->document;
+            // $file_path = 'certificates';
+            // File::delete($file_path . '/' . $oldFile);
 
             $participant->delete($participant);
             return redirect()->route('dashboard.participant.index')->with('success', 'participant has ben delete');

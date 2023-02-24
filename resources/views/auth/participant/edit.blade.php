@@ -55,12 +55,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label>NIP</label>
-                                            <input type="number" class="form-control" name="nip" placeholder="NIP ..."
+                                            <input type="text" class="form-control" name="nip" placeholder="NIP ..."
                                                 required value="{{ old('nip', $participant->nip) }}">
                                         </div>
                                         <div class="form-group">
                                             <label>NIK</label>
-                                            <input type="number" class="form-control" name="nik" placeholder="NIK ..."
+                                            <input type="text" class="form-control" name="nik" placeholder="NIK ..."
                                                 required value="{{ old('nik', $participant->nik) }}">
                                         </div>
                                         <div class="form-group">
@@ -83,6 +83,12 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tempat, Tanggal Lahir</label>
+                                            <input type="text" class="form-control" name="birth"
+                                                placeholder="Tempat, tanggal lahir ..." required
+                                                value="{{ old('birth', $participant->birth) }}">
+                                        </div>
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="text" class="form-control" name="email"
@@ -120,13 +126,13 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label>Document Certificate</label>
                                             <br>
                                             <iframe src="{{ asset('certificates/' . $participant->document) }}"
                                                 frameBorder="0" scrolling="auto" height="180px" width="650px"></iframe>
                                             <input type="file" class="form-control" name="document">
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-outline-success btn-round float-right">
                                                 <i class="fas fa-sync"></i>

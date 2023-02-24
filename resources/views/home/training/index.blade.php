@@ -41,17 +41,21 @@
                         <?php $no = 0; ?>
                         @foreach ($participants as $participant)
                             <?php $no++; ?>
-                            <tr>
-                                <th scope="row" class="text-center">{{ $no }}</th>
-                                <td>{{ $participant->name }}</td>
-                                <td class="text-center">{{ $training->batch }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('show.participant', $participant->slug) }}" class="btn btn-warning">
-                                        <i class="fas fa-eye"></i>
-                                        Lihat
-                                    </a>
-                                </td>
-                            </tr>
+                            @if ($participant->name == '-')
+                            @else
+                                <tr>
+                                    <th scope="row" class="text-center">{{ $no }}</th>
+                                    <td>{{ $participant->name }}</td>
+                                    <td class="text-center">{{ $training->batch }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('show.participant', $participant->slug) }}"
+                                            class="btn btn-warning">
+                                            <i class="fas fa-eye"></i>
+                                            Lihat
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

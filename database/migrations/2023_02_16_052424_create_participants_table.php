@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('nip');
             $table->string('nik');
+            $table->string('birth');
             $table->string('pangkat_golongan');
             $table->string('jabatan');
             $table->string('instansi');

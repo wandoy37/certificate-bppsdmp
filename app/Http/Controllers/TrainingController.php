@@ -46,6 +46,7 @@ class TrainingController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
+                'code' => 'required',
                 'title' => 'required',
                 'batch' => 'required',
                 'year' => 'required',
@@ -65,6 +66,7 @@ class TrainingController extends Controller
         DB::beginTransaction();
         try {
             Training::create([
+                'code' => $request->code,
                 'title' => $request->title,
                 'slug' => Str::slug($request->title . '-angkatan-' . $request->batch . '-tahun-' . $request->year, '-'),
                 'batch' => $request->batch,
@@ -120,6 +122,7 @@ class TrainingController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
+                'code' => 'required',
                 'title' => 'required',
                 'batch' => 'required',
                 'year' => 'required',
@@ -140,6 +143,7 @@ class TrainingController extends Controller
         try {
             $training = Training::where('slug', $slug)->first();
             $training->update([
+                'code' => $request->code,
                 'title' => $request->title,
                 'slug' => Str::slug($request->title . '-angkatan-' . $request->batch . '-tahun-' . $request->year, '-'),
                 'batch' => $request->batch,

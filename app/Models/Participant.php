@@ -10,6 +10,7 @@ class Participant extends Model
     use HasFactory;
 
     protected $guarded = [];
+    // protected $dates = ['start_date', 'end_date'];
 
     public function role()
     {

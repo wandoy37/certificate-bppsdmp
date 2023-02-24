@@ -63,6 +63,10 @@
                                             <td class="text-center d-flex justify-content-center">
                                                 <div class="form-inline">
                                                     <div class="ml-2">
+                                                        <a href="{{ route('dashboard.participant.show', $participant->slug) }}"
+                                                            class="btn btn-outline-info btn-round">
+                                                            <i class="fas fa-print"></i>
+                                                        </a>
                                                         <a href="{{ route('dashboard.participant.edit', $participant->slug) }}"
                                                             class="btn btn-outline-warning btn-round">
                                                             <i class="fas fa-pen"></i>
@@ -88,6 +92,9 @@
                             </table>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-12">
+                    {{ $participants->links('pagination::bootstrap-4') }}
                 </div>
             </div>
 

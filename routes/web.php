@@ -26,9 +26,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 // });
 
 Route::get('/sertifikat', function () {
-    $slug = 'test-slug';
-    $url = url()->route('show.training', $slug);
-    return view('sertifikat', compact('url'));
+    return view('sertifikat');
 });
 
 Route::controller(HomeController::class)->group(function () {
@@ -70,4 +68,7 @@ Route::prefix('auth')->middleware(['auth'])->group(function () {
     Route::get('/peserta/{slug}/edit', [ParticipantController::class, 'edit'])->name('dashboard.participant.edit');
     Route::patch('/peserta/{slug}/update', [ParticipantController::class, 'update'])->name('dashboard.participant.update');
     Route::delete('/peserta/{slug}/delete', [ParticipantController::class, 'destroy'])->name('dashboard.participant.delete');
+
+    // Generate Certificate
+    Route::get('/peserta/{slug}/show', [ParticipantController::class, 'show'])->name('dashboard.participant.show');
 });

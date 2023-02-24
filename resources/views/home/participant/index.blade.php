@@ -67,21 +67,21 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Status</th>
-                                    <td class="text-success fw-bold">LULUS</td>
+                                    <td class="text-success fw-bold text-uppercase">Telah Mengikuti Pelatihan</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 py-4">
+            {{-- <div class="col-lg-12 py-4">
                 <div class="card">
                     <div class="card-body">
                         <iframe src="{{ asset('certificates/' . $participant->document) }}" frameBorder="0"
                             scrolling="auto" height="900px" width="100%"></iframe>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
