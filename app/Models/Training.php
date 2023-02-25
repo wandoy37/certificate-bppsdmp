@@ -16,8 +16,8 @@ class Training extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function participants()
+    public function certificates()
     {
-        return $this->hasMany(Participant::class);
+        return $this->hasMany(Certificate::class, 'training_id', 'id');
     }
 }

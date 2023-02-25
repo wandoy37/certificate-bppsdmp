@@ -57,9 +57,7 @@ class ParticipantController extends Controller
                 'jabatan' => 'required',
                 'instansi' => 'required',
                 'email' => 'required',
-                // 'document' => 'required',
                 'role' => 'required',
-                'training' => 'required',
             ],
             [],
         );
@@ -96,9 +94,7 @@ class ParticipantController extends Controller
                 'jabatan' => $request->jabatan,
                 'instansi' => $request->instansi,
                 'email' => $request->email,
-                'document' => 'doc-unknow',
                 'role_id' => $request->role,
-                'training_id' => $request->training,
             ];
 
             Participant::create($data);
@@ -162,7 +158,6 @@ class ParticipantController extends Controller
                 'birth' => 'required',
                 'email' => 'required',
                 'role' => 'required',
-                'training' => 'required',
             ],
             [],
         );
@@ -206,9 +201,7 @@ class ParticipantController extends Controller
                 'jabatan' => $request->jabatan,
                 'instansi' => $request->instansi,
                 'email' => $request->email,
-                'document' => 'doc-unknow',
                 'role_id' => $request->role,
-                'training_id' => $request->training,
             ]);
             return redirect()->route('dashboard.participant.index')->with('success', 'Peserta has ben added');
         } catch (\Throwable $th) {

@@ -17,17 +17,16 @@ class ParticipantFactory extends Factory
     public function definition()
     {
         return [
-            'name' => '-',
-            'slug' => '-',
-            'nip' => '-',
-            'nik' => '-',
-            'birth' => '-',
-            'pangkat_golongan' => '-',
-            'jabatan' => '-',
-            'instansi' => '-',
-            'email' => '-',
-            'role_id' => 1,
-            'training_id' => 1,
+            'name' => $this->faker->name(),
+            'slug' => $this->faker->slug(),
+            'nip' => rand(1000000000, 9999999999),
+            'nik' => rand(1000000000, 9999999999),
+            'birth' => $this->faker->dateTime(),
+            'pangkat_golongan' => $this->faker->randomElement(['Golongan A', 'Golongan B', 'Golongan C', 'Golongan D']),
+            'jabatan' => $this->faker->randomElement(['Pangkat A', 'Pangkat B', 'Pangkat C', 'Pangkat D']),
+            'instansi' => $this->faker->randomElement(['Instansi A', 'Instansi B', 'Instansi C', 'Instansi D']),
+            'email' => $this->faker->email(),
+            'role_id' => $this->faker->randomElement([1, 2, 3]),
         ];
     }
 }

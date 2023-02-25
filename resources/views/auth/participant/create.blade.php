@@ -41,8 +41,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('dashboard.participant.store') }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('dashboard.participant.store') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -97,21 +96,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Pelatihan yang diikuti</label>
-                                            <select name="training" class="form-control text-capitalize">
-                                                <option value="">-select pelatihan-</option>
-                                                @foreach ($trainings as $training)
-                                                    <option value="{{ $training->id }}">
-                                                        {{ $training->title . ' angkatan ' . $training->batch . ' tahun ' . $training->year }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        {{-- <div class="form-group">
-                                            <label>Document Certificate</label>
-                                            <input type="file" class="form-control" name="document">
-                                        </div> --}}
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-outline-success btn-round float-right">
                                                 <i class="fas fa-plus"></i>

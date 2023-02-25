@@ -41,8 +41,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('dashboard.participant.update', $participant->slug) }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('dashboard.participant.update', $participant->slug) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <div class="row">
@@ -109,30 +108,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Pelatihan yang diikuti</label>
-                                            <select name="training" class="form-control text-capitalize">
-                                                <option value="">-select pelatihan-</option>
-                                                @foreach ($trainings as $training)
-                                                    @if (old($training->id, $participant->training_id) == $training->id)
-                                                        <option value="{{ $training->id }}" selected>
-                                                            {{ $training->title . ' angkatan ' . $training->batch . ' tahun ' . $training->year }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $training->id }}">
-                                                            {{ $training->title . ' angkatan ' . $training->batch . ' tahun ' . $training->year }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        {{-- <div class="form-group">
-                                            <label>Document Certificate</label>
-                                            <br>
-                                            <iframe src="{{ asset('certificates/' . $participant->document) }}"
-                                                frameBorder="0" scrolling="auto" height="180px" width="650px"></iframe>
-                                            <input type="file" class="form-control" name="document">
-                                        </div> --}}
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-outline-success btn-round float-right">
                                                 <i class="fas fa-sync"></i>

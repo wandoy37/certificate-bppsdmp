@@ -47,44 +47,36 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th scope="col">Nama Peserta</th>
-                                        <th scope="col">Pelatihan</th>
-                                        <th scope="col" width="30%">Actions</th>
+                                        <th scope="col">NIP</th>
+                                        <th scope="col">NIK</th>
+                                        <th scope="col">Pangkat/Golongan</th>
+                                        <th scope="col">Jabatan</th>
+                                        <th scope="col" width="20%">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($participants as $participant)
                                         <tr>
                                             <td>{{ $participant->name }}</td>
-                                            <td>
-                                                <span>{{ $participant->training->title }}</span>
-                                                <span>Angkatan {{ $participant->training->batch }}</span>
-                                                <span>Tahun {{ $participant->training->year }}</span>
-                                            </td>
-                                            <td class="text-center d-flex justify-content-center">
-                                                <div class="form-inline">
-                                                    <div class="ml-2">
-                                                        <a href="{{ route('dashboard.participant.show', $participant->slug) }}"
-                                                            class="btn btn-outline-info btn-round">
-                                                            <i class="fas fa-print"></i>
-                                                        </a>
-                                                        <a href="{{ route('dashboard.participant.edit', $participant->slug) }}"
-                                                            class="btn btn-outline-warning btn-round">
-                                                            <i class="fas fa-pen"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="ml-2">
-                                                        <form id="form-delete-{{ $participant->id }}"
-                                                            action="{{ route('dashboard.participant.delete', $participant->slug) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                        </form>
-                                                        <button type="button" class="btn btn-danger btn-round"
-                                                            onclick="btnDelete( {{ $participant->id }} )">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                            <td class="text-center">{{ $participant->nip }}</td>
+                                            <td class="text-center">{{ $participant->nik }}</td>
+                                            <td class="text-center">{{ $participant->pangkat_golongan }}</td>
+                                            <td class="text-center">{{ $participant->jabatan }}</td>
+                                            <td class="text-center">
+                                                <form id="form-delete-{{ $participant->id }}"
+                                                    action="{{ route('dashboard.participant.delete', $participant->slug) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                                <a href="{{ route('dashboard.participant.edit', $participant->slug) }}"
+                                                    class="btn btn-link text-warning">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-link text-danger"
+                                                    onclick="btnDelete( {{ $participant->id }} )">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
