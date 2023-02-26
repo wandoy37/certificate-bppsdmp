@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\TrainingController;
+use App\Models\Certificate;
 use App\Models\Participant;
 use App\Models\Training;
 use Illuminate\Support\Facades\Route;
@@ -71,4 +73,12 @@ Route::prefix('auth')->middleware(['auth'])->group(function () {
 
     // Generate Certificate
     Route::get('/peserta/{slug}/show', [ParticipantController::class, 'show'])->name('dashboard.participant.show');
+
+    // Certificates / Sertifikasi
+    Route::get('/sertifikat', [CertificateController::class, 'index'])->name('dashboard.certificate.index');
+    Route::get('/sertifikat/create', [CertificateController::class, 'create'])->name('dashboard.certificate.create');
+    Route::post('/sertifikat/store', [CertificateController::class, 'store'])->name('dashboard.certificate.store');
+    Route::get('/sertifikat/{code}/edit', [CertificateController::class, 'edit'])->name('dashboard.certificate.edit');
+    Route::patch('/sertifikat/{code}/update', [CertificateController::class, 'update'])->name('dashboard.certificate.update');
+    Route::delete('/sertifikat/{code}/delete', [CertificateController::class, 'destroy'])->name('dashboard.certificate.delete');
 });
