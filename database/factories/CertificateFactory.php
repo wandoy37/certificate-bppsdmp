@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Certificate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,10 +17,15 @@ class CertificateFactory extends Factory
      */
     public function definition()
     {
+        // Last data
+        $lastCertificate = Certificate::all()->count();
+        $lastCertificate++;
         return [
-            'code' => rand(10000, 99999),
-            'training_id' => $this->faker->randomElement([1, 2]),
-            'participant_id' => $this->faker->randomElement([1, 100]),
+            'code' => str_pad($lastCertificate, 4, '0', STR_PAD_LEFT),
+            'training_id' => 1,
+            'participant_id' => 1,
+            'penandatangan_id' => 1,
+            'tanggal_terbit' => 'unknowed'
         ];
     }
 }
