@@ -74,8 +74,6 @@ class CertificateController extends Controller
             $lastCertificate++;
 
             // Store QRCode
-
-
             QrCode::Format('png')->generate(route('show.certificate', str_pad($lastCertificate, 4, '0', STR_PAD_LEFT)), public_path() . '/qrcode/' . str_pad($lastCertificate, 4, '0', STR_PAD_LEFT) . '.' . 'png');
 
             Certificate::create([
@@ -116,7 +114,8 @@ class CertificateController extends Controller
         $certificate = Certificate::where('code', $code)->first();
         $trainings = Training::latest()->get();
         $participants = Participant::latest()->get();
-        return view('auth.certificate.edit', compact('certificate', 'trainings', 'participants'));
+        $penandatangans = Penandatangan::latest()->get();
+        return view('auth.certificate.edit', compact('certificate', 'trainings', 'participants', 'penandatangans'));
     }
 
     /**
@@ -134,6 +133,8 @@ class CertificateController extends Controller
             [
                 'training' => 'required',
                 'participant' => 'required',
+                'penandatangan' => 'required',
+                'tanggal_terbit' => 'required',
             ],
             [],
         );
@@ -150,6 +151,8 @@ class CertificateController extends Controller
             $certificate->update([
                 'training_id' => $request->training,
                 'participant_id' => $request->participant,
+                'penandatangan_id' => $request->penandatangan,
+                'tanggal_terbit' => $request->tanggal_terbit,
             ]);
             return redirect()->route('dashboard.certificate.index')->with('success', 'Update sertifikat berhasil');
         } catch (\Throwable $th) {
