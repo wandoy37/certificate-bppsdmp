@@ -5,6 +5,7 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\PenandatanganController;
 use App\Http\Controllers\TrainingController;
 use App\Models\Certificate;
 use App\Models\Participant;
@@ -89,4 +90,12 @@ Route::prefix('auth')->middleware(['auth'])->group(function () {
     // Cetak
     Route::get('/cetak/pelatihan/{code}', [CertificateController::class, 'cetakPelatihan'])->name('dashboard.certificate.cetak.pelatihan');
     Route::get('/cetak/bimtek/{code}', [CertificateController::class, 'cetakBimtek'])->name('dashboard.certificate.cetak.bimtek');
+
+    // Penandatangan
+    Route::get('/penandatangan', [PenandatanganController::class, 'index'])->name('dashboard.penandatangan.index');
+    Route::get('/penandatangan/create', [PenandatanganController::class, 'create'])->name('dashboard.penandatangan.create');
+    Route::post('/penandatangan/store', [PenandatanganController::class, 'store'])->name('dashboard.penandatangan.store');
+    Route::get('/penandatangan/{slug}/edit', [PenandatanganController::class, 'edit'])->name('dashboard.penandatangan.edit');
+    Route::patch('/penandatangan/{slug}/update', [PenandatanganController::class, 'update'])->name('dashboard.penandatangan.update');
+    Route::delete('penandatangan/{slug}/delete', [PenandatanganController::class, 'destroy'])->name('dashboard.penandatangan.delete');
 });

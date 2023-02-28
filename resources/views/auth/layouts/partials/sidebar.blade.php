@@ -35,8 +35,8 @@
                         <p>Peserta</p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->segment(2) == 'peserta' ? 'active' : '' }}">
-                    <a href="{{ route('dashboard.participant.index') }}">
+                <li class="nav-item {{ request()->segment(2) == 'penandatangan' ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.penandatangan.index') }}">
                         <i class="fas fa-user-check"></i>
                         <p>Penandatangan</p>
                     </a>
