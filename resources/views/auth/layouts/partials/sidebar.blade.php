@@ -29,6 +29,18 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->segment(2) == 'peserta' ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.participant.index') }}">
+                        <i class="fas fa-users"></i>
+                        <p>Peserta</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->segment(2) == 'peserta' ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.participant.index') }}">
+                        <i class="fas fa-user-check"></i>
+                        <p>Penandatangan</p>
+                    </a>
+                </li>
                 <li class="nav-section">
                     <h4 class="text-section">KELOLA SERTIFIKAT</h4>
                 </li>
@@ -42,12 +54,6 @@
                     <a href="{{ route('dashboard.training.index') }}">
                         <i class="fas fa-book-reader"></i>
                         <p>Pelatihan</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->segment(2) == 'peserta' ? 'active' : '' }}">
-                    <a href="{{ route('dashboard.participant.index') }}">
-                        <i class="fas fa-users"></i>
-                        <p>Peserta</p>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->segment(2) == 'sertifikat' ? 'active' : '' }}">

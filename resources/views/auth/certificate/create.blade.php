@@ -71,6 +71,28 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Tanggal Terbit</label>
+                                            <input type="text" name="tanggal_terbit" class="form-control"
+                                                placeholder="Contoh : Samarinda, 01 Januari 2023">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Penandatangan</label>
+                                            <select name="penandatangan" class="form-control">
+                                                <option value="">-select penandatangan-</option>
+                                                @foreach ($penandatangans as $penandatangan)
+                                                    <option value="{{ $penandatangan->id }}">
+                                                        {{ $penandatangan->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-outline-success btn-round float-right">
                                         <i class="fas fa-plus"></i>

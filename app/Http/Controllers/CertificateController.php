@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificate;
 use App\Models\Participant;
+use App\Models\Penandatangan;
 use App\Models\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,7 +38,8 @@ class CertificateController extends Controller
         $lastCertificate++;
         $trainings = Training::latest()->get();
         $participants = Participant::latest()->get();
-        return view('auth.certificate.create', compact('trainings', 'participants', 'lastCertificate'));
+        $penandatangans = Penandatangan::latest()->get();
+        return view('auth.certificate.create', compact('trainings', 'participants', 'lastCertificate', 'penandatangans'));
     }
 
     /**
@@ -54,6 +56,8 @@ class CertificateController extends Controller
             [
                 'training' => 'required',
                 'participant' => 'required',
+                'penandatangan' => 'required',
+                'tanggal_terbit' => 'required',
             ],
             [],
         );
@@ -78,6 +82,8 @@ class CertificateController extends Controller
                 'code' => str_pad($lastCertificate, 4, '0', STR_PAD_LEFT),
                 'training_id' => $request->training,
                 'participant_id' => $request->participant,
+                'penandatangan_id' => $request->penandatangan,
+                'tanggal_terbit' => $request->tanggal_terbit,
             ]);
             return redirect()->route('dashboard.certificate.index')->with('success', 'Berhasil menambahkan sertifikat');
         } catch (\Throwable $th) {
@@ -267,21 +273,21 @@ class CertificateController extends Controller
             // Telah Mengikuti
             $fpdi->SetFont("helvetica", "", 12);
             $fpdi->SetTextColor(0, 0, 0);
-            $fpdi->SetXY(0, 130);
+            $fpdi->SetXY(0, 128);
             $fpdi->SetX(10.5);
             $fpdi->Cell(0, 10, $certificate->training->title . ' yang diselenggarakan', 0, 0, 'C');
             $fpdi->SetX(12.6);
 
             $fpdi->SetFont("helvetica", "", 12);
             $fpdi->SetTextColor(0, 0, 0);
-            $fpdi->SetXY(0, 135);
+            $fpdi->SetXY(0, 133);
             $fpdi->SetX(10.5);
             $fpdi->Cell(0, 10, 'oleh UPTD Balai Penyluhan dan Pengembangan Sumber Daya Manusia Pertanian Provinsi Kalimanan Timur', 0, 0, 'C');
             $fpdi->SetX(12.6);
 
             $fpdi->SetFont("helvetica", "", 12);
             $fpdi->SetTextColor(0, 0, 0);
-            $fpdi->SetXY(0, 140);
+            $fpdi->SetXY(0, 138);
             $fpdi->SetX(10.5);
             $fpdi->Cell(0, 10, 'mulai tanggal ' . $certificate->training->tanggal_pelaksanaan . 'dengan jumlah ' . $certificate->training->hour . 'jam berlatih.', 0, 0, 'C');
             $fpdi->SetX(12.6);
@@ -292,6 +298,42 @@ class CertificateController extends Controller
             $fpdi->SetXY(0, 160);
             $fpdi->SetX(45);
             $fpdi->Image(public_path() . '/qrcode/' . $certificate->code . '.png', 47, 155, 20, 0, 'PNG');
+            $fpdi->SetX(12.6);
+
+            // Penandatangan
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 145.5);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, $certificate->tanggal_terbit, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 150);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, $certificate->penandatangan->jabatan, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+
+            $fpdi->SetFont("helvetica", "UB", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 170);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, $certificate->penandatangan->name, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 175);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, $certificate->penandatangan->pangkat_golongan, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 180);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, 'NIP. ' . $certificate->penandatangan->nip, 0, 0, 'C');
             $fpdi->SetX(12.6);
         }
 
@@ -366,6 +408,42 @@ class CertificateController extends Controller
             $fpdi->SetXY(0, 160);
             $fpdi->SetX(45);
             $fpdi->Image(public_path() . '/qrcode/' . $certificate->code . '.png', 47, 155, 20, 0, 'PNG');
+            $fpdi->SetX(12.6);
+
+            // Penandatangan
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 145.5);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, $certificate->tanggal_terbit, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 150);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, $certificate->penandatangan->jabatan, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+
+            $fpdi->SetFont("helvetica", "UB", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 170);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, $certificate->penandatangan->name, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 175);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, $certificate->penandatangan->pangkat_golongan, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 180);
+            $fpdi->SetX(170);
+            $fpdi->Cell(0, 10, 'NIP. ' . $certificate->penandatangan->nip, 0, 0, 'C');
             $fpdi->SetX(12.6);
         }
 

@@ -20,4 +20,9 @@ class Certificate extends Model
     {
         return $this->belongsTo(Participant::class);
     }
+
+    public function penandatangan()
+    {
+        return $this->belongsTo(Penandatangan::class);
+    }
 }
