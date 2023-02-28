@@ -48,11 +48,7 @@ class TrainingController extends Controller
             [
                 'code' => 'required',
                 'title' => 'required',
-                'batch' => 'required',
                 'year' => 'required',
-                'hour' => 'required',
-                'start_date' => 'required',
-                'end_date' => 'required',
                 'category' => 'required',
             ],
             [],
@@ -68,12 +64,11 @@ class TrainingController extends Controller
             Training::create([
                 'code' => $request->code,
                 'title' => $request->title,
-                'slug' => Str::slug($request->title . '-angkatan-' . $request->batch . '-tahun-' . $request->year, '-'),
-                'batch' => $request->batch,
+                'slug' => Str::slug($request->title . '-tahun-' . $request->year, '-'),
                 'year' => $request->year,
-                'hour' => $request->hour,
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
+                'hour' => $request->hour ?? 0,
+                'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
+                'tempat' => $request->tempat,
                 'category_id' => $request->category,
             ]);
             return redirect()->route('dashboard.training.index')->with('success', 'Pelatihan has ben added');
@@ -124,11 +119,7 @@ class TrainingController extends Controller
             [
                 'code' => 'required',
                 'title' => 'required',
-                'batch' => 'required',
                 'year' => 'required',
-                'hour' => 'required',
-                'start_date' => 'required',
-                'end_date' => 'required',
                 'category' => 'required',
             ],
             [],
@@ -145,12 +136,11 @@ class TrainingController extends Controller
             $training->update([
                 'code' => $request->code,
                 'title' => $request->title,
-                'slug' => Str::slug($request->title . '-angkatan-' . $request->batch . '-tahun-' . $request->year, '-'),
-                'batch' => $request->batch,
+                'slug' => Str::slug($request->title . '-tahun-' . $request->year, '-'),
                 'year' => $request->year,
-                'hour' => $request->hour,
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
+                'hour' => $request->hour ?? 0,
+                'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
+                'tempat' => $request->tempat,
                 'category_id' => $request->category,
             ]);
             return redirect()->route('dashboard.training.index')->with('success', 'Pelatihan has ben updated');

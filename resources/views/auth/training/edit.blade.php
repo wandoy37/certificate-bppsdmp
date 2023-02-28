@@ -58,12 +58,6 @@
                                                 value="{{ old('title', $training->title) }}">
                                         </div>
                                         <div class="form-group">
-                                            <label>Angkatan</label>
-                                            <input type="text" class="form-control" name="batch"
-                                                placeholder="Angkatan ..." required
-                                                value="{{ old('batch', $training->batch) }}">
-                                        </div>
-                                        <div class="form-group">
                                             <label>Tahun</label>
                                             <input type="text" class="form-control" name="year"
                                                 placeholder="Tahun ..." required value="{{ old('year', $training->year) }}">
@@ -82,28 +76,16 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Tanggal Mulai</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="start_date" name="start_date"
-                                                    required value="{{ old('start_date', $training->start_date) }}">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            <label>Tanggal Pelaksanaan</label>
+                                            <input type="text" class="form-control" name="tanggal_pelaksanaan"
+                                                placeholder="01 Januari sampai dengan 02 Januari 2023"
+                                                value="{{ $training->tanggal_pelaksanaan }}">
                                         </div>
                                         <div class="form-group">
-                                            <label>Tanggal Berakhir</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="end_date" name="end_date"
-                                                    required value="{{ old('end_date', $training->end_date) }}">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            <label>Bertempat</label>
+                                            <input type="text" class="form-control" name="tempat"
+                                                placeholder="Nama Tempat Contoh : Puri Lesia (Betapus)"
+                                                value="{{ $training->tempat }}">
                                         </div>
                                         <div class="form-group">
                                             <label>Category Pelatihan</label>

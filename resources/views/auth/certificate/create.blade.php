@@ -44,6 +44,11 @@
                             <form action="{{ route('dashboard.certificate.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
+                                    <label>Code</label>
+                                    <input type="text" name="code" class="form-control" placeholder="code .."
+                                        value="{{ str_pad($lastCertificate, 4, '0', STR_PAD_LEFT) }}">
+                                </div>
+                                <div class="form-group">
                                     <label>Pilih Pelatihan</label>
                                     <div class="select2-input">
                                         <select id="selectPelatihan" name="training" class="form-control">

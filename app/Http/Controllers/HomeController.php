@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Certificate;
 use App\Models\Participant;
 use App\Models\Training;
 use Illuminate\Http\Request;
@@ -32,5 +33,11 @@ class HomeController extends Controller
     {
         $participant = Participant::where('slug', $slug)->first();
         return view('home.participant.index', compact('participant'));
+    }
+
+    public function show_certificate($code)
+    {
+        $certificate = Certificate::where('code', $code)->first();
+        return response()->json($certificate);
     }
 }

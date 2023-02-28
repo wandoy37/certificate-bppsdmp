@@ -71,10 +71,18 @@
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <a href="{{ route('dashboard.certificate.edit', $certificate->code) }}"
-                                                    class="btn btn-link text-success">
-                                                    <i class="fas fa-print"></i>
-                                                </a>
+                                                @if ($certificate->training->category->title == 'pelatihan')
+                                                    <a href="{{ route('dashboard.certificate.cetak.pelatihan', $certificate->code) }}"
+                                                        class="btn btn-link text-success">
+                                                        <i class="fas fa-print"></i>
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('dashboard.certificate.cetak.bimtek', $certificate->code) }}"
+                                                        class="btn btn-link text-success">
+                                                        <i class="fas fa-print"></i>
+                                                    </a>
+                                                @endif
+
                                                 <a href="{{ route('dashboard.certificate.edit', $certificate->code) }}"
                                                     class="btn btn-link text-warning">
                                                     <i class="fas fa-pen"></i>

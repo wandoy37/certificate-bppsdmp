@@ -18,11 +18,13 @@ return new class extends Migration
             $table->string('code');
             $table->string('title');
             $table->string('slug');
-            $table->string('batch');
+            // $table->string('batch');
             $table->string('year');
             $table->string('hour');
-            $table->date('start_date');
-            $table->date('end_date');
+            // $table->date('start_date');
+            // $table->date('end_date');
+            $table->string('tanggal_pelaksanaan');
+            $table->string('tempat');
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
 

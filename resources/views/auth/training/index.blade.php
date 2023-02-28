@@ -47,7 +47,6 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th scope="col">Nama Pelatihan</th>
-                                        <th scope="col">Angkatan</th>
                                         <th scope="col">Tahun</th>
                                         <th scope="col">QR Code</th>
                                         <th scope="col" width="10%">Actions</th>
@@ -57,7 +56,6 @@
                                     @foreach ($trainings as $training)
                                         <tr style="height: 150px; vertical-align: center;">
                                             <td>{{ $training->title }}</td>
-                                            <td class="text-center">{{ $training->batch }}</td>
                                             <td class="text-center">{{ $training->year }}</td>
                                             <td class="text-center">
                                                 {!! QrCode::size(100)->generate(route('show.training', $training->slug)) !!}

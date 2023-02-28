@@ -39,6 +39,9 @@ Route::controller(HomeController::class)->group(function () {
     // Trainings / Pelatihan
     Route::get('/training/{slug}', 'show_training')->name('show.training');
     Route::get('/participant/{slug}', 'show_participant')->name('show.participant');
+
+    // Certificate Single
+    Route::get('/certificate/{code}', [HomeController::class, 'show_certificate'])->name('show.certificate');
 });
 
 // Auth
@@ -81,4 +84,9 @@ Route::prefix('auth')->middleware(['auth'])->group(function () {
     Route::get('/sertifikat/{code}/edit', [CertificateController::class, 'edit'])->name('dashboard.certificate.edit');
     Route::patch('/sertifikat/{code}/update', [CertificateController::class, 'update'])->name('dashboard.certificate.update');
     Route::delete('/sertifikat/{code}/delete', [CertificateController::class, 'destroy'])->name('dashboard.certificate.delete');
+
+
+    // Cetak
+    Route::get('/cetak/pelatihan/{code}', [CertificateController::class, 'cetakPelatihan'])->name('dashboard.certificate.cetak.pelatihan');
+    Route::get('/cetak/bimtek/{code}', [CertificateController::class, 'cetakBimtek'])->name('dashboard.certificate.cetak.bimtek');
 });
