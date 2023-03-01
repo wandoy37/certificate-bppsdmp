@@ -21,8 +21,17 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        $participants = Participant::latest()->paginate(10);
-        return view('auth.participant.index', compact('participants'));
+        $participants = DB::table('participants');
+        if (request('search')) {
+            $participants->where('name', 'LIKE', '%' . request('search') . '%');
+        }
+
+        // Output filter search
+        $search = request('search') ?? '';
+
+        $participants = $participants->latest()->paginate(10);
+
+        return view('auth.participant.index', compact('participants', 'search'));
     }
 
     /**

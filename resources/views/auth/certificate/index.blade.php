@@ -47,11 +47,25 @@
                     </a>
                 </div>
                 <div class="col-lg-12">
+                    <div class="row my-4">
+                        <div class="col-sm-6">
+                            <form action="{{ route('dashboard.certificate.index') }}">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" name="search" placeholder="Pencarian..."
+                                        value="{{ $search }}">
+                                    <span class="input-icon-addon">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <div class="card">
                         <div class="card-body">
                             <table class="table table-hover">
                                 <thead>
                                     <tr class="text-center">
+                                        <th scope="col">Code</th>
                                         <th scope="col">Nama Pelatihan</th>
                                         <th scope="col">Kategori</th>
                                         <th scope="col">Nama Peserta</th>
@@ -60,17 +74,22 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($certificates as $certificate)
-                                        <tr>
+                                        <tr class="text-center">
+                                            <td>{{ $certificate->code }}</td>
                                             <td>{{ $certificate->training->title }}</td>
                                             <td>{{ $certificate->training->category->title }}</td>
                                             <td>{{ $certificate->participant->name }}</td>
-                                            <td class="text-center">
+                                            <td>
                                                 <form id="form-delete-{{ $certificate->id }}"
                                                     action="{{ route('dashboard.certificate.delete', $certificate->code) }}"
                                                     method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
+                                                <a href="{{ route('dashboard.certificate.cetak.qrcode', $certificate->code) }}"
+                                                    class="btn btn-link text-dark">
+                                                    <i class="fas fa-qrcode"></i>
+                                                </a>
                                                 @if ($certificate->training->category->title == 'pelatihan')
                                                     <a href="{{ route('dashboard.certificate.cetak.pelatihan', $certificate->code) }}"
                                                         class="btn btn-link text-success">

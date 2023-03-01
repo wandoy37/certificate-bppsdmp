@@ -41,6 +41,19 @@
                     </a>
                 </div>
                 <div class="col-lg-12">
+                    <div class="row my-4">
+                        <div class="col-sm-6">
+                            <form action="{{ route('dashboard.participant.index') }}">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" name="search"
+                                        placeholder="Cari nama peserta..." value="{{ $search }}">
+                                    <span class="input-icon-addon">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <div class="card">
                         <div class="card-body">
                             <table class="table table-hover">

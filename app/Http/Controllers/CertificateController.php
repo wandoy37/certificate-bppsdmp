@@ -20,10 +20,19 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $certificates = Certificate::latest()->paginate(10);
-        return view('auth.certificate.index', compact('certificates'));
+        // $certificates = Certificate::latest()->paginate(10);
+        $certificates = Certificate::orderBy('code', 'DESC')->paginate(10);
+
+        if (request('search')) {
+            $certificates = Certificate::where('code', 'LIKE', '%' . request('search') . '%')
+                ->orderBy('code', 'DESC')->paginate(10);
+        }
+
+        $search = request('search') ?? '';
+
+        return view('auth.certificate.index', compact('certificates', 'search'));
     }
 
     /**
@@ -54,6 +63,7 @@ class CertificateController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
+                'code' => 'required|unique:certificates',
                 'training' => 'required',
                 'participant' => 'required',
                 'penandatangan' => 'required',
@@ -69,15 +79,11 @@ class CertificateController extends Controller
 
         DB::beginTransaction();
         try {
-            // Last data
-            $lastCertificate = Certificate::all()->count();
-            $lastCertificate++;
-
             // Store QRCode
-            QrCode::Format('png')->generate(route('show.certificate', str_pad($lastCertificate, 4, '0', STR_PAD_LEFT)), public_path() . '/qrcode/' . str_pad($lastCertificate, 4, '0', STR_PAD_LEFT) . '.' . 'png');
+            QrCode::Format('png')->generate(route('show.certificate', $request->code), public_path() . '/qrcode/' . $request->code . '.' . 'png');
 
             Certificate::create([
-                'code' => str_pad($lastCertificate, 4, '0', STR_PAD_LEFT),
+                'code' => $request->code,
                 'training_id' => $request->training,
                 'participant_id' => $request->participant,
                 'penandatangan_id' => $request->penandatangan,
@@ -147,6 +153,9 @@ class CertificateController extends Controller
         DB::beginTransaction();
         try {
             $certificate = Certificate::where('code', $code)->first();
+
+            // Store QRCode
+            QrCode::Format('png')->generate(route('show.certificate', $certificate->code), public_path() . '/qrcode/' . $request->code . '.' . 'png');
 
             $certificate->update([
                 'training_id' => $request->training,
@@ -447,6 +456,44 @@ class CertificateController extends Controller
             $fpdi->SetXY(0, 180);
             $fpdi->SetX(170);
             $fpdi->Cell(0, 10, 'NIP. ' . $certificate->penandatangan->nip, 0, 0, 'C');
+            $fpdi->SetX(12.6);
+        }
+
+        return $fpdi->Output($outputFilePath, 'F');
+    }
+
+    // QrCode Only
+    public function cetakQrCode(Request $request, $code)
+    {
+        // Get data certificate
+        $certificate = Certificate::where('code', $code)->first();
+
+        $filePath = public_path("certificates/blank_page.pdf");
+        $outputFilePath = public_path("certificates/pageqr/" . $certificate->code . "." . 'pdf');
+        $this->fillPDFFileQrCode($filePath, $outputFilePath, $certificate);
+
+        return response()->file($outputFilePath);
+    }
+
+    public function fillPDFFileQrCode($file, $outputFilePath, $certificate)
+    {
+        $fpdi = new FPDI;
+
+        $count = $fpdi->setSourceFile($file);
+
+        for ($i = 1; $i <= $count; $i++) {
+
+            $template = $fpdi->importPage($i);
+            $size = $fpdi->getTemplateSize($template);
+            $fpdi->AddPage($size['orientation'], array($size['width'], $size['height']));
+            $fpdi->useTemplate($template);
+
+            // QrCode
+            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetTextColor(0, 0, 0);
+            $fpdi->SetXY(0, 160);
+            $fpdi->SetX(45);
+            $fpdi->Image(public_path() . '/qrcode/' . $certificate->code . '.png', 47, 155, 20, 0, 'PNG');
             $fpdi->SetX(12.6);
         }
 

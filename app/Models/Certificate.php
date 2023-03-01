@@ -9,6 +9,7 @@ class Certificate extends Model
 {
     use HasFactory;
 
+    protected $table = 'certificates';
     protected $guarded = [];
 
     public function training()
