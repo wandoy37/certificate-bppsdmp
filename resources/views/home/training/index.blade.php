@@ -30,37 +30,33 @@
             <div class="col-lg-8">
                 <table class="table table-hover table-bordered">
                     <thead class="table-success">
-                        <tr>
+                        <tr class="text-center">
                             <th scope="col">No</th>
                             <th scope="col">Nama Peserta</th>
-                            <th scope="col">Angkatan</th>
+                            <th scope="col">Code Certificate</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no = 0; ?>
-                        @foreach ($participants as $participant)
+                        @foreach ($certificates as $certificate)
                             <?php $no++; ?>
-                            @if ($participant->name == '-')
-                            @else
-                                <tr>
-                                    <th scope="row" class="text-center">{{ $no }}</th>
-                                    <td>{{ $participant->name }}</td>
-                                    <td class="text-center">{{ $training->batch }}</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('show.participant', $participant->slug) }}"
-                                            class="btn btn-warning">
-                                            <i class="fas fa-eye"></i>
-                                            Lihat
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endif
+                            <tr class="text-center">
+                                <th scope="row">{{ $no }}</th>
+                                <td>{{ $certificate->participant->name }}</td>
+                                <td class="text-center">{{ $certificate->code }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('show.certificate', $certificate->code) }}" class="btn btn-warning">
+                                        <i class="fas fa-eye"></i>
+                                        Lihat
+                                    </a>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="my-4 d-flex justify-content-center">
-                    {{ $participants->links('pagination::bootstrap-4') }}
+                    {{ $certificates->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>

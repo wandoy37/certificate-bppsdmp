@@ -25,8 +25,8 @@ class HomeController extends Controller
     public function show_training($slug)
     {
         $training = Training::where('slug', $slug)->first();
-        $participants = Participant::where('training_id', $training->id)->orderBy('id', 'DESC')->paginate(10);
-        return view('home.training.index', compact('training', 'participants'));
+        $certificates = Certificate::where('training_id', $training->id)->orderBy('code', 'DESC')->paginate(10);
+        return view('home.training.index', compact('training', 'certificates'));
     }
 
     public function show_participant($slug)
@@ -38,6 +38,6 @@ class HomeController extends Controller
     public function show_certificate($code)
     {
         $certificate = Certificate::where('code', $code)->first();
-        return response()->json($certificate);
+        return view('home.certificate.show', compact('certificate'));
     }
 }
