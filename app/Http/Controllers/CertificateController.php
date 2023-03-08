@@ -385,7 +385,7 @@ class CertificateController extends Controller
             $fpdi->Cell(0, 105, 'Nomor : ' . $certificate->training->code . ' / ' . $certificate->code . ' / BPPSDMP / ' . $certificate->training->year, 0, 0, 'C');
             $fpdi->SetX(12.6);
 
-            $fpdi->SetFont("helvetica", "B", 20);
+            $fpdi->SetFont("Times", "B", 28);
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 93);
             $fpdi->SetX(10.5);
