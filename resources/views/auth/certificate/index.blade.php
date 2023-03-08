@@ -20,18 +20,6 @@
                     <li class="nav-item">
                         <a href="{{ route('dashboard.certificate.index') }}">Sertifikat</a>
                     </li>
-                    {{-- <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Pages</a>
-                    </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Starter Page</a>
-                    </li> --}}
                 </ul>
             </div>
             {{-- <div class="page-category">Inner page content goes here</div> --}}
@@ -47,19 +35,48 @@
                     </a>
                 </div>
                 <div class="col-lg-12">
-                    <div class="row my-4">
-                        <div class="col-sm-6">
-                            <form action="{{ route('dashboard.certificate.index') }}">
+                    <form action="{{ route('dashboard.certificate.index') }}">
+                        <div class="row my-4">
+                            <div class="col-sm-4">
                                 <div class="input-icon">
                                     <input type="text" class="form-control" name="search" placeholder="Pencarian..."
-                                        value="{{ $search }}">
+                                        value="">
                                     <span class="input-icon-addon">
                                         <i class="fa fa-search"></i>
                                     </span>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="select2-input">
+                                    <select id="basic" name="category" class="form-control">
+                                        <option value="">-select kategori-</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->title }}">{{ $category->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="select2-input">
+                                    <select id="basic" name="training" class="form-control">
+                                        <option value="">-select pelatihan-</option>
+                                        @foreach ($trainings as $training)
+                                            <option value="{{ $training->title }}">{{ $training->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-success">
+                                    <i class="fas fa-search"></i>
+                                    Filter
+                                </button>
+                                <a href="{{ route('dashboard.certificate.index') }}" class="btn btn-black">
+                                    Clear
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                     <div class="card">
                         <div class="card-body">
                             <table class="table table-hover">
@@ -76,9 +93,9 @@
                                     @foreach ($certificates as $certificate)
                                         <tr class="text-center">
                                             <td>{{ $certificate->code }}</td>
-                                            <td>{{ $certificate->training->title }}</td>
-                                            <td>{{ $certificate->training->category->title }}</td>
-                                            <td>{{ $certificate->participant->name }}</td>
+                                            <td>{{ $certificate->pelatihan_title }}</td>
+                                            <td class="text-uppercase">{{ $certificate->kategori_title }}</td>
+                                            <td>{{ $certificate->peserta_nama }}</td>
                                             <td>
                                                 <form id="form-delete-{{ $certificate->id }}"
                                                     action="{{ route('dashboard.certificate.delete', $certificate->code) }}"
@@ -86,11 +103,11 @@
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <a href="{{ route('dashboard.certificate.cetak.qrcode', $certificate->code) }}"
+                                                {{-- <a href="{{ route('dashboard.certificate.cetak.qrcode', $certificate->code) }}"
                                                     class="btn btn-link text-dark">
                                                     <i class="fas fa-qrcode"></i>
-                                                </a>
-                                                @if ($certificate->training->category->title == 'pelatihan')
+                                                </a> --}}
+                                                @if ($certificate->kategori_title == 'pelatihan')
                                                     <a href="{{ route('dashboard.certificate.cetak.pelatihan', $certificate->code) }}"
                                                         class="btn btn-link text-success">
                                                         <i class="fas fa-print"></i>
@@ -118,8 +135,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    {{ $certificates->links('pagination::bootstrap-4') }}
+                <div class="col-lg-12 d-flex justify-content-center">
+                    {{ $certificates->appends(request()->all())->links('pagination::bootstrap-4') }}
                 </div>
             </div>
 

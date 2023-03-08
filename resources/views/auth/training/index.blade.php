@@ -47,6 +47,7 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th scope="col">Nama Pelatihan</th>
+                                        <th scope="col">Kategori Pelatihan</th>
                                         <th scope="col">Tahun</th>
                                         <th scope="col">QR Code</th>
                                         <th scope="col" width="10%">Actions</th>
@@ -56,13 +57,14 @@
                                     @foreach ($trainings as $training)
                                         <tr style="height: 150px; vertical-align: center;">
                                             <td>{{ $training->title }}</td>
+                                            <td class="text-uppercase text-center">{{ $training->category->title }}</td>
                                             <td class="text-center">{{ $training->year }}</td>
                                             <td class="text-center">
                                                 {!! QrCode::size(100)->generate(route('show.training', $training->slug)) !!}
                                                 {{-- {{ route('show.training', $training->slug) }} --}}
                                             </td>
                                             <td class="text-center">
-                                                <div class="form-inline">
+                                                <div class="form-inline ml-4">
                                                     <a href="{{ route('dashboard.training.edit', $training->slug) }}"
                                                         class="text-warning">
                                                         <i class="fas fa-pen"></i>

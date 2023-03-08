@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Certificate;
 use App\Models\Participant;
 use App\Models\Penandatangan;
@@ -20,19 +21,48 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        // $certificates = Certificate::latest()->paginate(10);
-        $certificates = Certificate::orderBy('code', 'DESC')->paginate(10);
+        // Get Data Certificate
+        $certificates = DB::table('certificates')
+            ->join('participants', 'participants.id', '=', 'certificates.participant_id')
+            ->join('trainings', 'trainings.id', '=', 'certificates.training_id')
+            ->join('categories', 'categories.id', '=', 'trainings.category_id')
+            ->join('penandatangans', 'penandatangans.id', '=', 'certificates.penandatangan_id')
+            ->select(
+                'certificates.id',
+                'certificates.code',
+                'trainings.title AS pelatihan_title',
+                'categories.title AS kategori_title',
+                'participants.name AS peserta_nama',
+            );
+        // Get Data Category
+        $categories = Category::orderBy('id', 'DESC')->get();
+        // Get Data Traininig/Pelatihan
+        $trainings = Training::orderBy('id', 'DESC')->get();
 
+        // Method Filters
         if (request('search')) {
-            $certificates = Certificate::where('code', 'LIKE', '%' . request('search') . '%')
-                ->orderBy('code', 'DESC')->paginate(10);
+            $certificates = $certificates->where(function ($query) {
+                $query->where('certificates.code', 'LIKE', '%' . request('search') . '%')
+                    ->orWhere('participants.name', 'LIKE', '%' . request('search') . '%')
+                    ->orWhere('trainings.title', 'LIKE', '%' . request('search') . '%')
+                    ->orWhere('categories.title', 'LIKE', '%' . request('search') . '%');
+            });
         }
 
-        $search = request('search') ?? '';
+        if (request('category')) {
+            $certificates = $certificates->where('categories.title', 'LIKE', '%' . request('category') . '%');
+        }
 
-        return view('auth.certificate.index', compact('certificates', 'search'));
+        if (request('training')) {
+            $certificates = $certificates->where('trainings.title', 'LIKE', '%' . request('training') . '%');
+        }
+
+
+        $certificates = $certificates->orderBy('code', 'DESC')->paginate(15);
+
+        return view('auth.certificate.index', compact('certificates', 'categories', 'trainings'));
     }
 
     /**
