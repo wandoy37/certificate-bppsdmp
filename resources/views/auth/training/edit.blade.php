@@ -59,7 +59,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Tahun</label>
-                                            <input type="text" class="form-control" name="year"
+                                            <input type="text" class="form-control" name="year" id="year"
                                                 placeholder="Tahun ..." required value="{{ old('year', $training->year) }}">
                                         </div>
                                         <div class="form-group">
@@ -77,9 +77,26 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tanggal Pelaksanaan</label>
-                                            <input type="text" class="form-control" name="tanggal_pelaksanaan"
-                                                placeholder="01 Januari sampai dengan 02 Januari 2023"
-                                                value="{{ $training->tanggal_pelaksanaan }}">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control"
+                                                        name="old_tanggal_pelaksanaan"
+                                                        value="{{ $training->tanggal_pelaksanaan }}" disabled>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="datepicker_awal"
+                                                        name="datepicker_awal">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">s.d.</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="datepicker_akhir"
+                                                            name="datepicker_akhir">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Bertempat</label>
@@ -125,13 +142,19 @@
 @endsection
 
 @push('scripts')
-    <script>
-        $('#start_date').datetimepicker({
-            format: 'YYYY-MM-DD',
-        });
+    @push('scripts')
+        <script>
+            $('#year').datetimepicker({
+                format: 'YYYY',
+            });
 
-        $('#end_date').datetimepicker({
-            format: 'YYYY-MM-DD',
-        });
-    </script>
+            $('#datepicker_awal').datetimepicker({
+                format: 'YYYY-MM-DD',
+            });
+
+            $('#datepicker_akhir').datetimepicker({
+                format: 'YYYY-MM-DD',
+            });
+        </script>
+    @endpush
 @endpush

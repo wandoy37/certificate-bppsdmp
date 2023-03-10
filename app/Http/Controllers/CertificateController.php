@@ -8,11 +8,13 @@ use App\Models\Participant;
 use App\Models\Penandatangan;
 use App\Models\Training;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use setasign\Fpdi\Fpdi;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class CertificateController extends Controller
 {
@@ -97,9 +99,15 @@ class CertificateController extends Controller
                 'training' => 'required',
                 'participant' => 'required',
                 'penandatangan' => 'required',
-                'tanggal_terbit' => 'required',
+                'date' => 'required',
             ],
-            [],
+            [
+                'code.unique' => 'Code sertifikat telah digunakan',
+                'date.required' => 'Tanggal terbit tidak boleh kosong',
+                'training.required' => 'Pelatihan tidak boleh kosong',
+                'participant.required' => 'Peserta tidak boleh kosong',
+                'penandatangan.required' => 'Penandatangan tidak boleh kosong',
+            ],
         );
 
         // kondisi jika validasi gagal dilewati.
@@ -109,15 +117,13 @@ class CertificateController extends Controller
 
         DB::beginTransaction();
         try {
-            // Store QRCode
-            QrCode::Format('png')->generate(route('show.certificate', $request->code), public_path() . '/qrcode/' . $request->code . '.' . 'png');
-
+            $date = $request->kota . ', ' . Carbon::parse($request->date)->translatedFormat('d F Y');
             Certificate::create([
                 'code' => $request->code,
                 'training_id' => $request->training,
                 'participant_id' => $request->participant,
                 'penandatangan_id' => $request->penandatangan,
-                'tanggal_terbit' => $request->tanggal_terbit,
+                'tanggal_terbit' => $date,
             ]);
             return redirect()->route('dashboard.certificate.index')->with('success', 'Berhasil menambahkan sertifikat');
         } catch (\Throwable $th) {
@@ -170,9 +176,13 @@ class CertificateController extends Controller
                 'training' => 'required',
                 'participant' => 'required',
                 'penandatangan' => 'required',
-                'tanggal_terbit' => 'required',
             ],
-            [],
+            [
+                'code.unique' => 'Code sertifikat telah digunakan',
+                'training.required' => 'Pelatihan tidak boleh kosong',
+                'participant.required' => 'Peserta tidak boleh kosong',
+                'penandatangan.required' => 'Penandatangan tidak boleh kosong',
+            ],
         );
 
         // kondisi jika validasi gagal dilewati.
@@ -183,15 +193,12 @@ class CertificateController extends Controller
         DB::beginTransaction();
         try {
             $certificate = Certificate::where('code', $code)->first();
-
-            // Store QRCode
-            QrCode::Format('png')->generate(route('show.certificate', $certificate->code), public_path() . '/qrcode/' . $request->code . '.' . 'png');
-
+            $date = $request->kota . ', ' . Carbon::parse($request->date)->translatedFormat('d F Y');
             $certificate->update([
                 'training_id' => $request->training,
                 'participant_id' => $request->participant,
                 'penandatangan_id' => $request->penandatangan,
-                'tanggal_terbit' => $request->tanggal_terbit,
+                'tanggal_terbit' => $date ?? $certificate->tanggal_terbit,
             ]);
             return redirect()->route('dashboard.certificate.index')->with('success', 'Update sertifikat berhasil');
         } catch (\Throwable $th) {
@@ -227,6 +234,9 @@ class CertificateController extends Controller
     {
         // Get data certificate
         $certificate = Certificate::where('code', $code)->first();
+        // Store QRCode
+        QrCode::Format('png')->generate(route('show.certificate', $certificate->code), public_path() . '/qrcode/' . $request->code . '.' . 'png');
+
         $filePath = public_path("certificates/template_pelatihan.pdf");
         $outputFilePath = public_path("certificates/pelatihan/" . $certificate->code . "." . 'pdf');
         $this->fillPDFFilePelatihan($filePath, $outputFilePath, $certificate);
@@ -274,7 +284,7 @@ class CertificateController extends Controller
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 80);
             $fpdi->SetX(150);
-            $fpdi->Cell(0, 10, $certificate->participant->name, 0, 0, 'L');
+            $fpdi->Cell(0, 10, Str::headline(strtolower($certificate->participant->name)), 0, 0, 'L');
             $fpdi->SetX(12.6);
 
             $fpdi->SetFont("helvetica", "", 12);
@@ -388,6 +398,9 @@ class CertificateController extends Controller
         // Get data certificate
         $certificate = Certificate::where('code', $code)->first();
 
+        // Store QRCode
+        QrCode::Format('png')->generate(route('show.certificate', $certificate->code), public_path() . '/qrcode/' . $request->code . '.' . 'png');
+
         $filePath = public_path("certificates/template_bimtek.pdf");
         $outputFilePath = public_path("certificates/bimtek/" . $certificate->code . "." . 'pdf');
         $this->fillPDFFileBimtek($filePath, $outputFilePath, $certificate);
@@ -408,6 +421,8 @@ class CertificateController extends Controller
             $fpdi->AddPage($size['orientation'], array($size['width'], $size['height']));
             $fpdi->useTemplate($template);
 
+            $fpdi->AddFont("Lobster", "", "Lobster-Regular.php");
+
             $fpdi->SetFont("helvetica", "", 12);
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 10);
@@ -415,11 +430,11 @@ class CertificateController extends Controller
             $fpdi->Cell(0, 105, 'Nomor : ' . $certificate->training->code . ' / ' . $certificate->code . ' / BPPSDMP / ' . $certificate->training->year, 0, 0, 'C');
             $fpdi->SetX(12.6);
 
-            $fpdi->SetFont("Times", "B", 28);
+            $fpdi->SetFont("Lobster", "", 28);
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 93);
             $fpdi->SetX(10.5);
-            $fpdi->Cell(0, 10, $certificate->participant->name, 0, 0, 'C');
+            $fpdi->Cell(0, 10, Str::headline(strtolower($certificate->participant->name)), 0, 0, 'C');
             $fpdi->SetX(12.6);
 
             // Text Descriptions
@@ -486,44 +501,6 @@ class CertificateController extends Controller
             $fpdi->SetXY(0, 180);
             $fpdi->SetX(170);
             $fpdi->Cell(0, 10, 'NIP. ' . $certificate->penandatangan->nip, 0, 0, 'C');
-            $fpdi->SetX(12.6);
-        }
-
-        return $fpdi->Output($outputFilePath, 'F');
-    }
-
-    // QrCode Only
-    public function cetakQrCode(Request $request, $code)
-    {
-        // Get data certificate
-        $certificate = Certificate::where('code', $code)->first();
-
-        $filePath = public_path("certificates/blank_page.pdf");
-        $outputFilePath = public_path("certificates/pageqr/" . $certificate->code . "." . 'pdf');
-        $this->fillPDFFileQrCode($filePath, $outputFilePath, $certificate);
-
-        return response()->file($outputFilePath);
-    }
-
-    public function fillPDFFileQrCode($file, $outputFilePath, $certificate)
-    {
-        $fpdi = new FPDI;
-
-        $count = $fpdi->setSourceFile($file);
-
-        for ($i = 1; $i <= $count; $i++) {
-
-            $template = $fpdi->importPage($i);
-            $size = $fpdi->getTemplateSize($template);
-            $fpdi->AddPage($size['orientation'], array($size['width'], $size['height']));
-            $fpdi->useTemplate($template);
-
-            // QrCode
-            $fpdi->SetFont("helvetica", "", 12);
-            $fpdi->SetTextColor(0, 0, 0);
-            $fpdi->SetXY(0, 160);
-            $fpdi->SetX(45);
-            $fpdi->Image(public_path() . '/qrcode/' . $certificate->code . '.png', 47, 155, 20, 0, 'PNG');
             $fpdi->SetX(12.6);
         }
 

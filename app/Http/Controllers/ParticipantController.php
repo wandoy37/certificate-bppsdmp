@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\File;
-use Nette\Utils\Json;
+use Illuminate\Support\Carbon;
 
 class ParticipantController extends Controller
 {
@@ -21,7 +20,16 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        $participants = DB::table('participants');
+        $participants = DB::table('participants')
+            ->join('roles', 'roles.id', '=', 'participants.role_id')
+            ->select([
+                'participants.id',
+                'participants.name',
+                'participants.slug',
+                'participants.nik',
+                'participants.nip',
+                'roles.title AS role',
+            ]);
         if (request('search')) {
             $participants->where('name', 'LIKE', '%' . request('search') . '%');
         }
@@ -29,7 +37,7 @@ class ParticipantController extends Controller
         // Output filter search
         $search = request('search') ?? '';
 
-        $participants = $participants->latest()->paginate(10);
+        $participants = $participants->orderBy('id', 'DESC')->paginate(10);
 
         return view('auth.participant.index', compact('participants', 'search'));
     }
@@ -59,13 +67,6 @@ class ParticipantController extends Controller
             $request->all(),
             [
                 'name' => 'required',
-                'nip' => 'required',
-                'nik' => 'required',
-                'birth' => 'required',
-                'pangkat_golongan' => 'required',
-                'jabatan' => 'required',
-                'instansi' => 'required',
-                'email' => 'required',
                 'role' => 'required',
             ],
             [],
@@ -78,39 +79,24 @@ class ParticipantController extends Controller
 
         DB::beginTransaction();
         try {
-            // // Make Dir
-            // $file_path = 'certificates';
-            // if (!file_exists($file_path)) {
-            //     File::makeDirectory($file_path, 0775, true, true);
-            // }
-
-            // // Upload and Save File
-            // if ($request['document']) {
-            //     $file = $request['document'];
-            //     $ext = $file->getClientOriginalExtension();
-            //     $filename = Str::slug($request->name, '-') . '-' . date('Ymd') . '.' . $ext;
-            //     $file->move($file_path, $filename);
-            //     $request['document'] = $filename;
-            // }
-
             $data = [
                 'name' => $request->name,
                 'slug' => Str::slug($request->name, '-') . '-' . date('Ymd'),
-                'nip' => $request->nip,
-                'nik' => $request->nik,
-                'birth' => $request->birth,
-                'pangkat_golongan' => $request->pangkat_golongan,
-                'jabatan' => $request->jabatan,
-                'instansi' => $request->instansi,
-                'email' => $request->email,
+                'nip' => $request->nip ?? '-',
+                'nik' => $request->nik ?? '-',
+                'birth' => $request->kota . ', ' . Carbon::parse($request->date)->translatedFormat('d F Y') ?? '-',
+                'pangkat_golongan' => $request->pangkat_golongan ?? '-',
+                'jabatan' => $request->jabatan ?? '-',
+                'instansi' => $request->instansi ?? '-',
+                'email' => $request->email ?? '-',
                 'role_id' => $request->role,
             ];
 
             Participant::create($data);
-            return redirect()->route('dashboard.participant.index')->with('success', 'Peserta has ben added');
+            return redirect()->route('dashboard.participant.index')->with('success', 'Peserta berhasil ditambahkan');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('dashboard.participant.index')->with('fails', 'Peserta fail added');
+            return redirect()->route('dashboard.participant.index')->with('fails', 'Peserta gagal di tambahkan');
         } finally {
             DB::commit();
         }
@@ -125,8 +111,6 @@ class ParticipantController extends Controller
     public function show($slug)
     {
         $peserta = Participant::where('slug', $slug)->first();
-        // $count = Participant::where('training_id', $peserta->training_id)->count();
-        // return response()->json($count);
         return view('auth.participant.print', compact('peserta'));
     }
 
@@ -158,14 +142,6 @@ class ParticipantController extends Controller
             $request->all(),
             [
                 'name' => 'required',
-                'nip' => 'required',
-                'nik' => 'required',
-                'birth' => 'required',
-                'pangkat_golongan' => 'required',
-                'jabatan' => 'required',
-                'instansi' => 'required',
-                'birth' => 'required',
-                'email' => 'required',
                 'role' => 'required',
             ],
             [],
@@ -180,42 +156,22 @@ class ParticipantController extends Controller
         try {
             // Get Participant
             $participant = Participant::where('slug', $slug)->first();
-
-            // // Make Dir
-            // $file_path = 'certificates';
-            // if (!file_exists($file_path)) {
-            //     File::makeDirectory($file_path, 0775, true, true);
-            // }
-
-            // // Upload and Save File
-            // if ($request['document']) {
-            //     // delete old file
-            //     $oldFile = $participant->document;
-            //     File::delete($file_path, $oldFile);
-
-            //     $file = $request['document'];
-            //     $ext = $file->getClientOriginalExtension();
-            //     $filename = Str::slug($request->name, '-') . '-' . date('Ymd') . '.' . $ext;
-            //     $file->move($file_path, $filename);
-            //     $request['document'] = $filename;
-            // }
-
             $participant->update([
                 'name' => $request->name,
                 'slug' => Str::slug($request->name, '-') . '-' . date('Ymd'),
-                'nip' => $request->nip,
-                'nik' => $request->nik,
-                'birth' => $request->birth,
-                'pangkat_golongan' => $request->pangkat_golongan,
-                'jabatan' => $request->jabatan,
-                'instansi' => $request->instansi,
-                'email' => $request->email,
-                'role_id' => $request->role,
+                'nip' => $request->nip ?? '-',
+                'nik' => $request->nik ?? '-',
+                'birth' => $request->kota . ', ' . Carbon::parse($request->date)->translatedFormat('d F Y') ?? $participant->birth,
+                'pangkat_golongan' => $request->pangkat_golongan ?? '-',
+                'jabatan' => $request->jabatan ?? '-',
+                'instansi' => $request->instansi ?? '-',
+                'email' => $request->email ?? '-',
+                'role_id' => $request->role ?? '-',
             ]);
-            return redirect()->route('dashboard.participant.index')->with('success', 'Peserta has ben added');
+            return redirect()->route('dashboard.participant.index')->with('success', 'Peserta telah di update');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('dashboard.participant.index')->with('fails', 'Peserta fail added');
+            return redirect()->route('dashboard.participant.index')->with('fails', 'Peserta gagal di update');
         } finally {
             DB::commit();
         }
@@ -233,16 +189,11 @@ class ParticipantController extends Controller
         try {
             $participant = Participant::where('slug', $slug)->first();
 
-            // // delete old file
-            // $oldFile = $participant->document;
-            // $file_path = 'certificates';
-            // File::delete($file_path . '/' . $oldFile);
-
             $participant->delete($participant);
-            return redirect()->route('dashboard.participant.index')->with('success', 'participant has ben delete');
+            return redirect()->route('dashboard.participant.index')->with('success', 'Peserta telah di hapus');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('dashboard.participant.index')->with('fail', 'participant fail delete');
+            return redirect()->route('dashboard.participant.index')->with('fail', 'Peserta gagal di hapus');
         } finally {
             DB::commit();
         }

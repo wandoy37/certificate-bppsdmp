@@ -61,6 +61,9 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @error('training')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Pilih Peserta</label>
@@ -79,14 +82,41 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @error('participant')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Tanggal Terbit</label>
-                                            <input type="text" name="tanggal_terbit" class="form-control"
-                                                placeholder="Contoh : Samarinda, 01 Januari 2023"
-                                                value="{{ old('tanggal_terbit', $certificate->tanggal_terbit) }}">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control"
+                                                        value="{{ $certificate->tanggal_terbit }}" disabled>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Kota</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" name="kota"
+                                                            value="Samarinda" placeholder="Kota">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Date</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="datepicker"
+                                                            name="date">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @error('date')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -106,6 +136,9 @@
                                                     @endif
                                                 @endforeach
                                             </select>
+                                            @error('penandatangan')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -135,6 +168,11 @@
 
         $('#selectPeserta').select2({
             theme: "bootstrap"
+        });
+
+        $('#datepicker').datetimepicker({
+            // format: 'MM/DD/YYYY',
+            format: 'YYYY-MM-DD',
         });
     </script>
 @endpush

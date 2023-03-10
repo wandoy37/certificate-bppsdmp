@@ -46,50 +46,66 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Nama Peserta</label>
+                                            <label><span class="text-danger">*</span>Peserta</label>
                                             <input type="text" class="form-control" name="name"
                                                 placeholder="Nama Peserta ..." required>
                                         </div>
                                         <div class="form-group">
                                             <label>NIP</label>
-                                            <input type="text" class="form-control" name="nip" placeholder="NIP ..."
-                                                required>
+                                            <input type="text" class="form-control" name="nip" placeholder="NIP ...">
                                         </div>
                                         <div class="form-group">
                                             <label>NIK</label>
-                                            <input type="text" class="form-control" name="nik" placeholder="NIK ..."
-                                                required>
+                                            <input type="text" class="form-control" name="nik" placeholder="NIK ...">
                                         </div>
                                         <div class="form-group">
                                             <label>Pangkat/Golongan</label>
                                             <input type="text" class="form-control" name="pangkat_golongan"
-                                                placeholder="Pangkat/Golongan ..." required>
+                                                placeholder="Pangkat/Golongan ...">
                                         </div>
                                         <div class="form-group">
                                             <label>Jabatan</label>
                                             <input type="text" class="form-control" name="jabatan"
-                                                placeholder="Jabatan ..." required>
+                                                placeholder="Jabatan ...">
                                         </div>
                                         <div class="form-group">
                                             <label>Instansi</label>
                                             <input type="text" class="form-control" name="instansi"
-                                                placeholder="Instansi ..." required>
+                                                placeholder="Instansi ...">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tempat, Tanggal Lahir</label>
-                                            <input type="text" class="form-control" name="birth"
-                                                placeholder="Tempat, tanggal lahir ..." required>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Kota</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" name="kota"
+                                                            placeholder="Kota">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Date</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="datepicker"
+                                                            name="date">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="text" class="form-control" name="email"
-                                                placeholder="Email ..." required>
+                                                placeholder="Email ...">
                                         </div>
                                         <div class="form-group">
-                                            <label>Role</label>
-                                            <select name="role" class="form-control text-capitalize">
+                                            <label><span class="text-danger">*</span>Role</label>
+                                            <select name="role" class="form-control text-capitalize" required>
                                                 <option value="">-select role-</option>
                                                 @foreach ($roles as $role)
                                                     <option value="{{ $role->id }}">{{ $role->title }}</option>
@@ -115,3 +131,10 @@
     </div>
 
 @endsection
+@push('scripts')
+    <script>
+        $('#datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+        });
+    </script>
+@endpush

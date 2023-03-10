@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class TrainingController extends Controller
 {
@@ -50,6 +51,8 @@ class TrainingController extends Controller
                 'title' => 'required',
                 'year' => 'required',
                 'category' => 'required',
+                'datepicker_awal' => 'required',
+                'datepicker_akhir' => 'required',
             ],
             [],
         );
@@ -61,13 +64,14 @@ class TrainingController extends Controller
 
         DB::beginTransaction();
         try {
+
             Training::create([
                 'code' => $request->code,
                 'title' => $request->title,
                 'slug' => Str::slug($request->title . '-tahun-' . $request->year, '-'),
                 'year' => $request->year,
                 'hour' => $request->hour ?? 0,
-                'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
+                'tanggal_pelaksanaan' => Carbon::parse($request->datepicker_awal)->translatedFormat('d F') . ' s.d. ' . Carbon::parse($request->datepicker_akhir)->translatedFormat('d F Y'),
                 'tempat' => $request->tempat,
                 'category_id' => $request->category,
             ]);
@@ -139,7 +143,7 @@ class TrainingController extends Controller
                 'slug' => Str::slug($request->title . '-tahun-' . $request->year, '-'),
                 'year' => $request->year,
                 'hour' => $request->hour ?? 0,
-                'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
+                'tanggal_pelaksanaan' => Carbon::parse($request->datepicker_awal)->translatedFormat('d F') . ' s.d. ' . Carbon::parse($request->datepicker_akhir)->translatedFormat('d F Y') ?? $request->old_tanggal_pelaksanaan,
                 'tempat' => $request->tempat,
                 'category_id' => $request->category,
             ]);

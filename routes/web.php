@@ -28,10 +28,6 @@ Route::get('/laravel-info', function () {
     return view('welcome');
 });
 
-// Route::get('/sertifikat', function () {
-//     return view('sertifikat');
-// });
-
 Route::controller(HomeController::class)->group(function () {
     // Category
     Route::get('/', 'index')->name('home.index');
@@ -90,8 +86,6 @@ Route::prefix('auth')->middleware(['auth'])->group(function () {
     // Cetak
     Route::get('/cetak/pelatihan/{code}', [CertificateController::class, 'cetakPelatihan'])->name('dashboard.certificate.cetak.pelatihan');
     Route::get('/cetak/bimtek/{code}', [CertificateController::class, 'cetakBimtek'])->name('dashboard.certificate.cetak.bimtek');
-    // QrCode Only
-    Route::get('/cetak/qrcode/{code}', [CertificateController::class, 'cetakQrCode'])->name('dashboard.certificate.cetak.qrcode');
 
     // Penandatangan
     Route::get('/penandatangan', [PenandatanganController::class, 'index'])->name('dashboard.penandatangan.index');
