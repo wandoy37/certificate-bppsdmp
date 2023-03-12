@@ -21,6 +21,18 @@
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
+                    <h4 class="text-section">MENU MASTER</h4>
+                </li>
+                <li class="nav-item {{ request()->segment(2) == 'pengguna' ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.user.index') }}">
+                        <i class="fas fa-users-cog"></i>
+                        <p>Pengguna</p>
+                    </a>
+                </li>
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
                     <h4 class="text-section">MENU NAVIGATIONS</h4>
                 </li>
                 <li class="nav-item {{ request()->segment(2) == 'dashboard' ? 'active' : '' }}">

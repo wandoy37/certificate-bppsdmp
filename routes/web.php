@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PenandatanganController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\UserController;
 use App\Models\Certificate;
 use App\Models\Participant;
 use App\Models\Training;
@@ -44,6 +45,14 @@ Route::controller(HomeController::class)->group(function () {
 // Auth
 Route::prefix('auth')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    // User Controller
+    Route::get('/pengguna', [UserController::class, 'index'])->name('dashboard.user.index');
+    Route::get('/pengguna/create', [UserController::class, 'create'])->name('dashboard.user.create');
+    Route::post('/pengguna/store', [UserController::class, 'store'])->name('dashboard.user.store');
+    Route::get('/pengguna/{slug}/edit', [UserController::class, 'edit'])->name('dashboard.user.edit');
+    Route::patch('/pengguna/{slug}/update', [UserController::class, 'update'])->name('dashboard.user.update');
+    Route::delete('/pengguna/{slug}/delete', [UserController::class, 'destroy'])->name('dashboard.user.delete');
 
     // Route Kelola Sertifikat
 
