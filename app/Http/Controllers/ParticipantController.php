@@ -26,7 +26,6 @@ class ParticipantController extends Controller
                 'participants.id',
                 'participants.name',
                 'participants.slug',
-                'participants.nik',
                 'participants.nip',
                 'roles.title AS role',
             ]);
@@ -83,12 +82,10 @@ class ParticipantController extends Controller
                 'name' => $request->name,
                 'slug' => Str::slug($request->name, '-') . '-' . date('Ymd'),
                 'nip' => $request->nip ?? '-',
-                'nik' => $request->nik ?? '-',
-                'birth' => $request->kota . ', ' . Carbon::parse($request->date)->translatedFormat('d F Y') ?? '-',
+                'birth' => $request->birth,
                 'pangkat_golongan' => $request->pangkat_golongan ?? '-',
                 'jabatan' => $request->jabatan ?? '-',
                 'instansi' => $request->instansi ?? '-',
-                'email' => $request->email ?? '-',
                 'role_id' => $request->role,
             ];
 
@@ -160,12 +157,10 @@ class ParticipantController extends Controller
                 'name' => $request->name,
                 'slug' => Str::slug($request->name, '-') . '-' . date('Ymd'),
                 'nip' => $request->nip ?? '-',
-                'nik' => $request->nik ?? '-',
-                'birth' => $request->kota . ', ' . Carbon::parse($request->date)->translatedFormat('d F Y') ?? $participant->birth,
+                'birth' => $request->birth,
                 'pangkat_golongan' => $request->pangkat_golongan ?? '-',
                 'jabatan' => $request->jabatan ?? '-',
                 'instansi' => $request->instansi ?? '-',
-                'email' => $request->email ?? '-',
                 'role_id' => $request->role ?? '-',
             ]);
             return redirect()->route('dashboard.participant.index')->with('success', 'Peserta telah di update');

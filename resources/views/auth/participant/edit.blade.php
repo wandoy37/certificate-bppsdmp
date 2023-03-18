@@ -58,11 +58,6 @@
                                                 required value="{{ old('nip', $participant->nip) }}">
                                         </div>
                                         <div class="form-group">
-                                            <label>NIK</label>
-                                            <input type="text" class="form-control" name="nik" placeholder="NIK ..."
-                                                required value="{{ old('nik', $participant->nik) }}">
-                                        </div>
-                                        <div class="form-group">
                                             <label>Pangkat/Golongan</label>
                                             <input type="text" class="form-control" name="pangkat_golongan"
                                                 placeholder="Pangkat/Golongan ..." required
@@ -84,36 +79,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tempat, Tanggal Lahir</label>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <input type="text" class="form-control"
-                                                        value="{{ $participant->birth }}" disabled>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Kota</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" name="kota"
-                                                            placeholder="Kota">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Date</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="datepicker"
-                                                            name="date">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="text" class="form-control" name="email"
-                                                placeholder="Email ..." required
-                                                value="{{ old('email', $participant->email) }}">
+                                            <input type="text" class="form-control" name="birth"
+                                                placeholder="example, 20 month 2023"
+                                                value="{{ old('birth', $participant->birth) }}">
                                         </div>
                                         <div class="form-group">
                                             <label><span class="text-danger">*</span>Role</label>

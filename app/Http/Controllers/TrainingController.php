@@ -51,10 +51,19 @@ class TrainingController extends Controller
                 'title' => 'required',
                 'year' => 'required',
                 'category' => 'required',
-                'datepicker_awal' => 'required',
-                'datepicker_akhir' => 'required',
+                'hour' => 'required',
+                'tanggal_pelaksanaan' => 'required',
+                'tempat' => 'required',
             ],
-            [],
+            [
+                'code.required' => 'Code wajib diisi.',
+                'title.required' => 'Nama Pelatihan wajib diisi.',
+                'year.required' => 'Tahun pelatihan wajib isi',
+                'category.required' => 'Kategori Pelatihan wajib diisi.',
+                'hour.required' => 'Durasi Pelatihan wajib diisi.',
+                'tanggal_pelaksanaan.required' => 'Tanggal pelaksanaan wajib diisi.',
+                'tempat.required' => 'Tempat Pelatihan wajib diisi',
+            ],
         );
 
         // kondisi jika validasi gagal dilewati.
@@ -71,7 +80,7 @@ class TrainingController extends Controller
                 'slug' => Str::slug($request->title . '-tahun-' . $request->year, '-'),
                 'year' => $request->year,
                 'hour' => $request->hour ?? 0,
-                'tanggal_pelaksanaan' => Carbon::parse($request->datepicker_awal)->translatedFormat('d F') . ' s.d. ' . Carbon::parse($request->datepicker_akhir)->translatedFormat('d F Y'),
+                'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
                 'tempat' => $request->tempat,
                 'category_id' => $request->category,
             ]);
@@ -125,8 +134,19 @@ class TrainingController extends Controller
                 'title' => 'required',
                 'year' => 'required',
                 'category' => 'required',
+                'hour' => 'required',
+                'tanggal_pelaksanaan' => 'required',
+                'tempat' => 'required',
             ],
-            [],
+            [
+                'code.required' => 'Code wajib diisi.',
+                'title.required' => 'Nama Pelatihan wajib diisi.',
+                'year.required' => 'Tahun pelatihan wajib isi',
+                'category.required' => 'Kategori Pelatihan wajib diisi.',
+                'hour.required' => 'Durasi Pelatihan wajib diisi.',
+                'tanggal_pelaksanaan.required' => 'Tanggal pelaksanaan wajib diisi.',
+                'tempat.required' => 'Tempat Pelatihan wajib diisi',
+            ],
         );
 
         // kondisi jika validasi gagal dilewati.
@@ -137,13 +157,14 @@ class TrainingController extends Controller
         DB::beginTransaction();
         try {
             $training = Training::where('slug', $slug)->first();
+
             $training->update([
                 'code' => $request->code,
                 'title' => $request->title,
                 'slug' => Str::slug($request->title . '-tahun-' . $request->year, '-'),
                 'year' => $request->year,
                 'hour' => $request->hour ?? 0,
-                'tanggal_pelaksanaan' => Carbon::parse($request->datepicker_awal)->translatedFormat('d F') . ' s.d. ' . Carbon::parse($request->datepicker_akhir)->translatedFormat('d F Y') ?? $request->old_tanggal_pelaksanaan,
+                'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
                 'tempat' => $request->tempat,
                 'category_id' => $request->category,
             ]);

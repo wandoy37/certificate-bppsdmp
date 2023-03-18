@@ -62,7 +62,6 @@
                                         <th scope="col">No</th>
                                         <th scope="col">Nama Peserta</th>
                                         <th scope="col">NIP</th>
-                                        <th scope="col">NIK</th>
                                         <th scope="col">Role</th>
                                         <th scope="col" width="20%">Actions</th>
                                     </tr>
@@ -74,7 +73,6 @@
                                             </td>
                                             <td>{{ $participant->name }}</td>
                                             <td class="text-center">{{ $participant->nip }}</td>
-                                            <td class="text-center">{{ $participant->nik }}</td>
                                             <td class="text-center">{{ $participant->role }}</td>
                                             <td class="text-center">
                                                 <form id="form-delete-{{ $participant->id }}"

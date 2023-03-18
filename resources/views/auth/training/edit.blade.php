@@ -50,76 +50,77 @@
                                             <label>Code</label>
                                             <input type="text" class="form-control" name="code" placeholder="Code ..."
                                                 required value="{{ old('code', $training->code) }}">
+                                            @error('code')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Nama Pelatihan</label>
                                             <input type="text" class="form-control" name="title"
                                                 placeholder="Nama Pelatihan ..." required
                                                 value="{{ old('title', $training->title) }}">
+                                            @error('title')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Tahun</label>
                                             <input type="text" class="form-control" name="year" id="year"
                                                 placeholder="Tahun ..." required value="{{ old('year', $training->year) }}">
+                                            @error('year')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Durasi Pelatihan</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="hour"
-                                                    placeholder="Durasi Pelatihan ..." required
+                                                    placeholder="Durasi Pelatihan ..."
                                                     value="{{ old('hour', $training->hour) }}">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">Jam</span>
                                                 </div>
                                             </div>
+                                            @error('hour')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tanggal Pelaksanaan</label>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <input type="text" class="form-control"
-                                                        name="old_tanggal_pelaksanaan"
-                                                        value="{{ $training->tanggal_pelaksanaan }}" disabled>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="datepicker_awal"
-                                                        name="datepicker_awal">
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">s.d.</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="datepicker_akhir"
-                                                            name="datepicker_akhir">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <input type="text" class="form-control" name="tanggal_pelaksanaan"
+                                                value="{{ old('tanggal_pelaksanaan', $training->tanggal_pelaksanaan) }}">
+                                            @error('tanggal_pelaksanaan')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Bertempat</label>
                                             <input type="text" class="form-control" name="tempat"
                                                 placeholder="Nama Tempat Contoh : Puri Lesia (Betapus)"
-                                                value="{{ $training->tempat }}">
+                                                value="{{ old('tempat', $training->tempat) }}">
+                                            @error('tempat')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Category Pelatihan</label>
                                             <select name="category" class="form-control" required>
-                                                <option value="">-select pelatihan-</option>
+                                                <option value="">-pilih kategori pelatihan-</option>
                                                 @foreach ($categories as $category)
                                                     @if (old($category->id, $training->category_id) == $category->id)
                                                         <option value="{{ $category->id }}" selected>
-                                                            {{ $category->title }}
-                                                        </option>
+                                                            {{ $category->title }}</option>
                                                     @else
                                                         <option value="{{ $category->id }}">{{ $category->title }}
                                                         </option>
                                                     @endif
                                                 @endforeach
-
                                             </select>
+                                            @error('category')
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-outline-success btn-round float-right">
@@ -146,14 +147,6 @@
         <script>
             $('#year').datetimepicker({
                 format: 'YYYY',
-            });
-
-            $('#datepicker_awal').datetimepicker({
-                format: 'YYYY-MM-DD',
-            });
-
-            $('#datepicker_akhir').datetimepicker({
-                format: 'YYYY-MM-DD',
             });
         </script>
     @endpush

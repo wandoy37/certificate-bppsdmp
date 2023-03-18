@@ -55,10 +55,6 @@
                                             <input type="text" class="form-control" name="nip" placeholder="NIP ...">
                                         </div>
                                         <div class="form-group">
-                                            <label>NIK</label>
-                                            <input type="text" class="form-control" name="nik" placeholder="NIK ...">
-                                        </div>
-                                        <div class="form-group">
                                             <label>Pangkat/Golongan</label>
                                             <input type="text" class="form-control" name="pangkat_golongan"
                                                 placeholder="Pangkat/Golongan ...">
@@ -77,31 +73,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tempat, Tanggal Lahir</label>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Kota</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" name="kota"
-                                                            placeholder="Kota">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Date</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="datepicker"
-                                                            name="date">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="text" class="form-control" name="email"
-                                                placeholder="Email ...">
+                                            <input type="text" class="form-control" name="birth"
+                                                placeholder="example, 20 month 2023">
                                         </div>
                                         <div class="form-group">
                                             <label><span class="text-danger">*</span>Role</label>
