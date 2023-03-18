@@ -45,6 +45,14 @@
                                 @csrf
                                 @method('PATCH')
                                 <div class="form-group">
+                                    <label>Code</label>
+                                    <input type="text" name="code" class="form-control" placeholder="code .."
+                                        value="{{ old('code', $certificate->code) }}">
+                                    @error('code')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label>Pilih Pelatihan</label>
                                     <div class="select2-input">
                                         <select id="selectPelatihan" name="training" class="form-control">
@@ -73,8 +81,7 @@
                                             @foreach ($participants as $participant)
                                                 @if (old($participant->id, $certificate->participant_id) == $participant->id)
                                                     <option value="{{ $participant->id }}" selected>
-                                                        {{ $participant->name }}
-                                                    </option>
+                                                        {{ $participant->name }}</option>
                                                 @else
                                                     <option value="{{ $participant->id }}">{{ $participant->name }}
                                                     </option>
@@ -90,30 +97,9 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Tanggal Terbit</label>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <input type="text" class="form-control"
-                                                        value="{{ $certificate->tanggal_terbit }}" disabled>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Kota</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" name="kota"
-                                                            value="Samarinda" placeholder="Kota">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Date</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="datepicker"
-                                                            name="date">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <input type="text" class="form-control" name="date"
+                                                placeholder="Example, 0 month 2023"
+                                                value="{{ old('date', $certificate->tanggal_terbit) }}">
                                             @error('date')
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             @enderror
@@ -144,8 +130,8 @@
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-outline-success btn-round float-right">
-                                        <i class="fas fa-sync"></i>
-                                        Update
+                                        <i class="fas fa-plus"></i>
+                                        Added
                                     </button>
                                 </div>
                             </form>

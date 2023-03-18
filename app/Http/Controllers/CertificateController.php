@@ -117,13 +117,12 @@ class CertificateController extends Controller
 
         DB::beginTransaction();
         try {
-            $date = $request->kota . ', ' . Carbon::parse($request->date)->translatedFormat('d F Y');
             Certificate::create([
                 'code' => $request->code,
                 'training_id' => $request->training,
                 'participant_id' => $request->participant,
                 'penandatangan_id' => $request->penandatangan,
-                'tanggal_terbit' => $date,
+                'tanggal_terbit' => $request->date,
             ]);
             return redirect()->route('dashboard.certificate.index')->with('success', 'Berhasil menambahkan sertifikat');
         } catch (\Throwable $th) {
@@ -193,12 +192,11 @@ class CertificateController extends Controller
         DB::beginTransaction();
         try {
             $certificate = Certificate::where('code', $code)->first();
-            $date = $request->kota . ', ' . Carbon::parse($request->date)->translatedFormat('d F Y');
             $certificate->update([
                 'training_id' => $request->training,
                 'participant_id' => $request->participant,
                 'penandatangan_id' => $request->penandatangan,
-                'tanggal_terbit' => $date ?? $certificate->tanggal_terbit,
+                'tanggal_terbit' => $request->date,
             ]);
             return redirect()->route('dashboard.certificate.index')->with('success', 'Update sertifikat berhasil');
         } catch (\Throwable $th) {
@@ -284,7 +282,7 @@ class CertificateController extends Controller
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 80);
             $fpdi->SetX(150);
-            $fpdi->Cell(0, 10, Str::headline(strtolower($certificate->participant->name)), 0, 0, 'L');
+            $fpdi->Cell(0, 10, $certificate->participant->name, 0, 0, 'L');
             $fpdi->SetX(12.6);
 
             $fpdi->SetFont("helvetica", "", 12);

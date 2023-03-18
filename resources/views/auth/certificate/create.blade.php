@@ -84,26 +84,8 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Tanggal Terbit</label>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Kota</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" name="kota"
-                                                            value="Samarinda" placeholder="Kota">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Date</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="datepicker"
-                                                            name="date">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <input type="text" class="form-control" name="date"
+                                                placeholder="Example, 0 month 2023">
                                             @error('date')
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             @enderror
