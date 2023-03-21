@@ -267,14 +267,14 @@ class CertificateController extends Controller
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 63);
             $fpdi->SetX(45);
-            $fpdi->Cell(0, 10, 'Pemerintah Provinsi Kalimantan Timur berdasarkan Peraturan Mentri Pertanian Republik Indonesia Nomor', 0, 0, 'L');
+            $fpdi->Cell(0, 10, 'Pemerintah Provinsi Kalimantan Timur berdasarkan Peraturan Menteri Pertanian Republik Indonesia Nomor', 0, 0, 'L');
             $fpdi->SetX(12.6);
 
             $fpdi->SetFont("helvetica", "", 12);
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 69);
             $fpdi->SetX(45);
-            $fpdi->Cell(0, 10, '37/PERMENTAN/SM.120/8/2018 tentang Pedoman Pelatihan Pertanian, manyatakan bahwa :', 0, 0, 'L');
+            $fpdi->Cell(0, 10, '37/PERMENTAN/SM.120/8/2018 tentang Pedoman Pelatihan Pertanian, menyatakan bahwa :', 0, 0, 'L');
             $fpdi->SetX(12.6);
 
             // Personal participant
@@ -332,14 +332,14 @@ class CertificateController extends Controller
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 133);
             $fpdi->SetX(10.5);
-            $fpdi->Cell(0, 10, 'oleh UPTD Balai Penyluhan dan Pengembangan Sumber Daya Manusia Pertanian Provinsi Kalimanan Timur', 0, 0, 'C');
+            $fpdi->Cell(0, 10, 'oleh UPTD Balai Penyuluhan dan Pengembangan Sumber Daya Manusia Pertanian Provinsi Kalimantan Timur', 0, 0, 'C');
             $fpdi->SetX(12.6);
 
             $fpdi->SetFont("helvetica", "", 12);
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 138);
             $fpdi->SetX(10.5);
-            $fpdi->Cell(0, 10, 'mulai tanggal ' . $certificate->training->tanggal_pelaksanaan . 'dengan jumlah ' . $certificate->training->hour . 'jam berlatih.', 0, 0, 'C');
+            $fpdi->Cell(0, 10, 'mulai tanggal ' . $certificate->training->tanggal_pelaksanaan . ' dengan jumlah ' . $certificate->training->hour . ' jam berlatih.', 0, 0, 'C');
             $fpdi->SetX(12.6);
 
             // QrCode
@@ -447,7 +447,7 @@ class CertificateController extends Controller
             $fpdi->SetTextColor(0, 0, 0);
             $fpdi->SetXY(0, 127);
             $fpdi->SetX(10.5);
-            $fpdi->Cell(0, 10, 'diselenggarakan oleh UPTD Balai Penyluhan dan Pengembangan SDM Pertanian Provinsi Kalimantan Timur', 0, 0, 'C');
+            $fpdi->Cell(0, 10, 'diselenggarakan oleh UPTD Balai Penyuluhan dan Pengembangan SDM Pertanian Provinsi Kalimantan Timur', 0, 0, 'C');
             $fpdi->SetX(12.6);
 
             $fpdi->SetFont("helvetica", "", 12);
