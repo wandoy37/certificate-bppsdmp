@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Certificate;
 use App\Models\Participant;
 use App\Models\Training;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -28,6 +29,23 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/laravel-info', function () {
     return view('welcome');
 });
+
+// Transformasi Tabel Certificates to Sertifikats
+Route::get('/data-sertifikat/{id}', function ($id) {
+    $sertifikats = DB::table('certificates')
+        ->select(
+            'certificates.id',
+            'certificates.code',
+            'certificates.training_id AS kegiatan_id',
+            'certificates.participant_id AS peserta_id',
+        )
+        ->where('training_id', $id)
+        ->get();
+    return response()->json($sertifikats);
+});
+
+
+
 
 Route::controller(HomeController::class)->group(function () {
     // Category
